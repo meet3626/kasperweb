@@ -42,12 +42,7 @@ app.use(cookieParser());
 
 // CORS configuration (allow requests from frontend)
 app.use(cors({
-  origin: [
-    'http://localhost:3000', 
-    'http://localhost:5173', 
-    'https://demoweb-n6l02gkvp-meet3626s-projects.vercel.app',
-    process.env.FRONTEND_URL
-  ].filter(Boolean),
+  origin: true,
   credentials: true,
 }));
 
