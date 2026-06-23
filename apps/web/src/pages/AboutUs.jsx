@@ -2,166 +2,160 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import SEOHead from '../components/SEOHead';
 import OptimizedImage from '../components/OptimizedImage';
+import { Building2, Target, ShieldCheck, ArrowRight } from 'lucide-react';
 
 const AboutUs = () => {
   return (
-    <div className="min-h-screen bg-[#0B0B0B] text-white pt-32 pb-12">
+    <div className="min-h-screen bg-[#050505] text-white pt-32 pb-12 relative overflow-hidden">
       <SEOHead 
         title="About Us | KAPSERFX IT SOLUTIONS EST"
         description="Learn about our mission to help businesses streamline operations and accelerate growth with expert technology consulting."
       />
 
+      {/* Ambient Lights */}
+      <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-accent-purple/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-[40%] left-[-10%] w-[600px] h-[600px] bg-accent-cyan/5 rounded-full blur-[150px] pointer-events-none" />
+
       {/* Hero Section */}
-      <section className="relative overflow-hidden mb-20">
-        <div className="container mx-auto px-6 relative z-10 text-center">
+      <section className="relative z-10 mb-32">
+        <div className="container mx-auto px-6 max-w-6xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto"
+            className="flex flex-col items-center"
           >
-            <div className="inline-block px-4 py-1.5 border border-white/20 rounded-full text-xs font-bold tracking-widest text-white mb-6 uppercase">
-              About Us
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 glass rounded-full text-xs font-semibold uppercase tracking-widest text-accent-purple mb-8">
+              <div className="w-2 h-2 rounded-full bg-accent-purple animate-pulse"></div>
+              Our Story
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-[800] uppercase tracking-wider mb-6 leading-tight">
-              About <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan to-accent-purple">KAPSERFX</span>
+            <h1 className="text-5xl md:text-6xl lg:text-8xl font-extrabold tracking-tighter mb-8 leading-none">
+              Pioneering <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan to-accent-purple italic font-light">Brokerage</span> Infrastructure
             </h1>
-            <p className="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              At KAPSERFX, we specialize in providing technology consulting, infrastructure solutions, operational support, and business advisory services to financial institutions, brokerage firms, fintech companies, and corporate clients worldwide.
+            <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto font-light leading-relaxed">
+              At KAPSERFX, we specialize in providing elite technology consulting, infrastructure solutions, and business advisory services to financial institutions, brokerage firms, and corporate clients worldwide.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Intro Image + Text Grid */}
-      <section className="py-16">
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* Image Block Asymmetric */}
+      <section className="relative z-10 mb-32">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="rounded-3xl overflow-hidden aspect-[4/3] border border-white/10 relative"
+              className="lg:col-span-7 h-[500px] md:h-[600px] rounded-[2.5rem] overflow-hidden border border-white/10 relative group"
             >
               <OptimizedImage 
-                src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&auto=format&fit=crop&q=80" 
-                alt="KAPSERFX Overview" 
-                width={800}
-                height={600}
-                className="w-full h-full object-cover"
+                src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200&auto=format&fit=crop&q=80" 
+                alt="Corporate Office" 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0B] via-transparent to-transparent"></div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight uppercase tracking-wider">
-                Streamline & <span className="text-accent-cyan">Accelerate Growth</span>
-              </h2>
-              <div className="space-y-6 text-gray-400 text-lg leading-relaxed">
-                <p>
-                  Our mission is to help businesses streamline operations, implement scalable technology solutions, improve efficiency, and accelerate growth through expert consulting and innovative systems.
-                </p>
-                <p>
-                  With extensive industry experience, we provide a wide range of services including CRM implementation, website development, infrastructure consulting, licensing advisory, payment solution consulting, back-office support, technical training, and digital growth solutions.
-                </p>
-                <p>
-                  We work closely with our clients to design, implement, and optimize the technology and operational frameworks required to build sustainable and scalable businesses.
-                </p>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+              <div className="absolute bottom-10 left-10 right-10">
+                <h3 className="text-3xl font-bold text-white mb-2">Global Presence</h3>
+                <p className="text-gray-300 font-light text-lg">Operating from the heart of Dubai's Business Bay.</p>
               </div>
             </motion.div>
+            
+            <div className="lg:col-span-5 flex flex-col gap-8">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="glass p-10 rounded-[2rem] border border-white/5"
+              >
+                <Building2 className="w-12 h-12 text-accent-cyan mb-6" />
+                <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">Streamlined Operations</h3>
+                <p className="text-gray-400 font-light leading-relaxed">
+                  Our mission is to help businesses scale by implementing robust technology solutions. We cut through the noise to deliver systems that work perfectly from day one.
+                </p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="glass p-10 rounded-[2rem] border border-white/5"
+              >
+                <Target className="w-12 h-12 text-accent-purple mb-6" />
+                <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">Accelerated Growth</h3>
+                <p className="text-gray-400 font-light leading-relaxed">
+                  From CRM implementation to liquidity advisory, we provide the entire ecosystem required to build sustainable and highly profitable brokerages.
+                </p>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Vision & Mission Section */}
-      <section className="py-20 relative overflow-hidden bg-[#121212]">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-purple/10 rounded-full blur-[100px] pointer-events-none"></div>
-        
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-[#0B0B0B] p-10 rounded-3xl border border-white/5 hover:border-accent-cyan/30 transition-colors"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-purple to-accent-cyan flex items-center justify-center mb-8">
-                <OptimizedImage src="https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?w=80&auto=format&fit=crop&q=80" alt="Vision" className="w-10 h-10 object-contain" width={40} height={40} />
-              </div>
-              <h3 className="text-2xl font-bold text-white uppercase tracking-widest mb-4">Our Vision</h3>
-              <p className="text-gray-400 text-lg leading-relaxed">
-                To become a trusted global technology and consulting partner for businesses seeking innovative infrastructure, operational excellence, and sustainable growth.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="bg-[#0B0B0B] p-10 rounded-3xl border border-white/5 hover:border-accent-cyan/30 transition-colors"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-purple to-accent-cyan flex items-center justify-center mb-8">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-              </div>
-              <h3 className="text-2xl font-bold text-white uppercase tracking-widest mb-4">Our Mission</h3>
-              <p className="text-gray-400 text-lg leading-relaxed">
-                To deliver reliable technology solutions, operational expertise, and strategic consulting services that help businesses improve efficiency, strengthen their infrastructure, and achieve long-term success.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Image Gallery */}
-      <section className="py-20">
-        <div className="container mx-auto px-6">
+      {/* Vision & Mission (Bento Style) */}
+      <section className="mb-32 relative z-10">
+        <div className="container mx-auto px-6 max-w-7xl">
           <div className="grid md:grid-cols-2 gap-8">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="rounded-3xl border border-white/10 overflow-hidden"
+              className="glass p-12 md:p-16 rounded-[2.5rem] border border-white/5 relative overflow-hidden group"
             >
-              <OptimizedImage 
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1024&auto=format&fit=crop&q=80" 
-                alt="Team" 
-                className="w-full h-80 object-cover"
-              />
+              <div className="absolute top-0 right-0 w-64 h-64 bg-accent-purple/10 rounded-full blur-[80px] -mr-32 -mt-32 transition-transform duration-700 group-hover:scale-150"></div>
+              <div className="relative z-10">
+                <h3 className="text-sm font-bold text-accent-purple uppercase tracking-widest mb-4">Our Vision</h3>
+                <h4 className="text-3xl md:text-4xl font-extrabold text-white leading-tight mb-8">
+                  To become the undisputed <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-purple to-accent-cyan">trusted partner</span> for global financial infrastructure.
+                </h4>
+                <p className="text-gray-400 font-light text-lg leading-relaxed">
+                  We envision a landscape where starting and scaling a brokerage is frictionless, powered by innovative infrastructure, operational excellence, and our deep industry expertise.
+                </p>
+              </div>
             </motion.div>
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="rounded-3xl border border-white/10 overflow-hidden"
+              className="glass p-12 md:p-16 rounded-[2.5rem] border border-white/5 relative overflow-hidden group"
             >
-              <OptimizedImage 
-                src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1024&auto=format&fit=crop&q=80" 
-                alt="Office" 
-                className="w-full h-80 object-cover"
-              />
+              <div className="absolute bottom-0 right-0 w-64 h-64 bg-accent-cyan/10 rounded-full blur-[80px] -mr-32 -mb-32 transition-transform duration-700 group-hover:scale-150"></div>
+              <div className="relative z-10">
+                <h3 className="text-sm font-bold text-accent-cyan uppercase tracking-widest mb-4">Our Mission</h3>
+                <h4 className="text-3xl md:text-4xl font-extrabold text-white leading-tight mb-8">
+                  To deliver reliable technology solutions that drive <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan to-accent-purple">long-term success.</span>
+                </h4>
+                <p className="text-gray-400 font-light text-lg leading-relaxed">
+                  We provide operational expertise and strategic consulting that help institutions improve efficiency, strengthen their technological backbone, and maintain strict regulatory compliance.
+                </p>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Statement */}
-      <section className="pb-20">
-        <div className="container mx-auto px-6 max-w-4xl text-center">
-          <div className="p-10 border border-white/10 rounded-3xl bg-white/5 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-cyan to-accent-purple"></div>
-            <h3 className="text-xl font-bold uppercase tracking-widest text-white mb-4">Statement</h3>
-            <p className="text-gray-400 text-lg leading-relaxed">
-              KAPSERFX is a technology consulting and business services company. We do not operate a brokerage, provide trading services, offer investment advice, manage client funds, or provide financial products. All services are provided exclusively to businesses, licensed institutions, and corporate clients.
-            </p>
-          </div>
+      {/* Legal Statement */}
+      <section className="relative z-10">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="p-8 md:p-12 border border-white/10 rounded-[2rem] bg-white/[0.02] relative overflow-hidden flex flex-col md:flex-row gap-8 items-center md:items-start"
+          >
+            <ShieldCheck className="w-16 h-16 text-gray-500 shrink-0" />
+            <div>
+              <h3 className="text-xl font-bold uppercase tracking-widest text-white mb-4">Corporate Statement</h3>
+              <p className="text-gray-400 text-lg leading-relaxed font-light">
+                KAPSERFX is a technology consulting and business services company. We do not operate a brokerage, provide trading services, offer investment advice, manage client funds, or provide financial products. All services are provided exclusively to businesses, licensed institutions, and corporate clients.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
 

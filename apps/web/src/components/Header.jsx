@@ -9,6 +9,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 // ─── Language Data ─────────────────────────────────────────────────────────────
 const LANGUAGES = [
@@ -304,19 +305,20 @@ const Header = () => {
 
   return (
     <>
-      <motion.header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-[0.22,1,0.36,1] ${
-          isScrolled ? 'bg-[#080b12]/85 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_10px_40px_rgba(0,0,0,0.5)]' : 'bg-transparent'
-        }`}
-      >
-        <div className={`container mx-auto px-6 flex justify-between items-center transition-all duration-500 ease-[0.22,1,0.36,1] ${
-          isScrolled ? 'h-16' : 'h-24'
-        }`}>
-
-          {/* Logo */}
-          <Link to="/" onClick={handleHomeClick} className="text-2xl font-bold text-white tracking-wider flex items-center gap-2 shrink-0">
-            <span className="text-accent-cyan">KAPSERFX</span>
-          </Link>
+      <div className="fixed top-0 left-0 w-full z-50 flex justify-center pt-6 px-4 pointer-events-none">
+        <motion.header
+          className={`pointer-events-auto transition-all duration-500 ease-[0.22,1,0.36,1] rounded-full ${
+            isScrolled 
+              ? 'bg-[#09090b]/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.4)] w-full max-w-6xl px-6 py-3' 
+              : 'bg-transparent w-full max-w-7xl px-4 py-4'
+          }`}
+        >
+          <div className="flex justify-between items-center w-full">
+            
+            {/* Logo */}
+            <Link to="/" onClick={handleHomeClick} className="text-xl md:text-2xl font-[800] text-white tracking-widest flex items-center gap-2 shrink-0">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan to-white">KAPSERFX</span>
+            </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-7">
@@ -372,6 +374,7 @@ const Header = () => {
 
           {/* Desktop Right */}
           <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
             <LanguageSelector />
             <Button
               className="bg-white text-black hover:bg-gray-100 group rounded-full font-bold px-6 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]"
@@ -389,7 +392,8 @@ const Header = () => {
             </button>
           </div>
         </div>
-      </motion.header>
+        </motion.header>
+      </div>
 
       {/* Mobile Fullscreen Menu */}
       <AnimatePresence>
@@ -502,13 +506,14 @@ const Header = () => {
                   <Link to="/brokerage-calculator" onClick={() => setIsOpen(false)} className="text-2xl font-semibold text-gray-300 hover:text-white transition-colors uppercase tracking-widest">{t('nav.calculator')}</Link>
                 </motion.div>
 
-                {/* Mobile Language Selector */}
+                {/* Mobile Language & Theme */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.52 }}
-                  className="w-full max-w-xs mt-2"
+                  className="w-full max-w-xs mt-2 flex flex-col gap-4 items-center"
                 >
+                  <ThemeToggle />
                   <LanguageSelector mobile />
                 </motion.div>
               </nav>

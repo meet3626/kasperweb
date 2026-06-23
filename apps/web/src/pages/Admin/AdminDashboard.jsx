@@ -74,16 +74,39 @@ export default function AdminDashboard() {
       localStorage.setItem('newsletterSubscribers', JSON.stringify(savedSubscribers));
     }
 
+    // Initialize dates for leads
+    const now = new Date();
+    const formatDate = (daysAgo) => {
+      const d = new Date(now);
+      d.setDate(d.getDate() - daysAgo);
+      return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    };
+
     if (savedLeads && savedLeads.length > 0) {
+      // Migration for old relative dates in localStorage
+      let updatedDates = false;
+      savedLeads = savedLeads.map(l => {
+        if (l.date === '2 hours ago') { updatedDates = true; return { ...l, date: formatDate(0) }; }
+        if (l.date === '1 day ago') { updatedDates = true; return { ...l, date: formatDate(1) }; }
+        if (l.date === '2 days ago') { updatedDates = true; return { ...l, date: formatDate(2) }; }
+        if (l.date === '1 week ago') { updatedDates = true; return { ...l, date: formatDate(7) }; }
+        if (l.date === '2 weeks ago') { updatedDates = true; return { ...l, date: formatDate(14) }; }
+        return l;
+      });
+
+      if (updatedDates) {
+        localStorage.setItem('adminLeads', JSON.stringify(savedLeads));
+      }
+
       setLeads(savedLeads);
     } else {
       // Initialize with mock leads if empty
       const mockLeads = [
-        { id: 1, name: 'Michael Chen', email: 'm.chen@apex-cap.com', phone: '+44 7700 900123', interest: 'White-Label MT5', status: 'New', date: '2 hours ago' },
-        { id: 2, name: 'Sarah Al-Fayed', email: 'sarah@desert-invest.ae', phone: '+971 50 123 4567', interest: 'Liquidity Provider', status: 'Connected', date: '1 day ago' },
-        { id: 3, name: 'David Smith', email: 'd.smith@proptrade.com', phone: '+1 555 019 2834', interest: 'CRM Software', status: 'In Progress', date: '2 days ago' },
-        { id: 4, name: 'Elena Rostov', email: 'e.rostov@fintech-eu.net', phone: '+357 22 123 456', interest: 'Business Consulting', status: 'Closed (Won)', date: '1 week ago' },
-        { id: 5, name: 'James Wilson', email: 'j.wilson@alphamarkets.com', phone: '+61 4 1234 5678', interest: 'Risk Management', status: 'New', date: '2 weeks ago' },
+        { id: 1, name: 'Michael Chen', email: 'm.chen@apex-cap.com', phone: '+44 7700 900123', interest: 'White-Label MT5', status: 'New', date: formatDate(0) },
+        { id: 2, name: 'Sarah Al-Fayed', email: 'sarah@desert-invest.ae', phone: '+971 50 123 4567', interest: 'Liquidity Provider', status: 'Connected', date: formatDate(1) },
+        { id: 3, name: 'David Smith', email: 'd.smith@proptrade.com', phone: '+1 555 019 2834', interest: 'CRM Software', status: 'In Progress', date: formatDate(2) },
+        { id: 4, name: 'Elena Rostov', email: 'e.rostov@fintech-eu.net', phone: '+357 22 123 456', interest: 'Business Consulting', status: 'Closed (Won)', date: formatDate(7) },
+        { id: 5, name: 'James Wilson', email: 'j.wilson@alphamarkets.com', phone: '+61 4 1234 5678', interest: 'Risk Management', status: 'New', date: formatDate(14) },
       ];
       setLeads(mockLeads);
       localStorage.setItem('adminLeads', JSON.stringify(mockLeads));

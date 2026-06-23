@@ -12,24 +12,24 @@ const FloatingCard = ({ icon: Icon, label, value, color, delay, className, toolt
     initial={{ opacity: 0, x: 40, y: 20 }}
     animate={{ opacity: 1, x: 0, y: 0 }}
     transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
-    className={`absolute bg-[#141820]/90 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-4 flex items-center gap-3 shadow-2xl group cursor-default hover:border-white/30 transition-colors duration-300 ${className}`}
+    className={`absolute bg-white/90 dark:bg-[#141820]/90 backdrop-blur-md border border-black/10 dark:border-white/10 rounded-2xl px-5 py-4 flex items-center gap-3 shadow-2xl group cursor-default hover:border-black/30 dark:hover:border-white/30 transition-colors duration-300 ${className}`}
   >
     <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${color}`}>
       <Icon size={18} className="text-white" />
     </div>
     <div>
-      <p className="text-white font-bold text-lg leading-none">{value}</p>
-      <p className="text-gray-400 text-xs mt-0.5 tracking-wide">{label}</p>
+      <p className="text-gray-900 dark:text-white font-bold text-lg leading-none">{value}</p>
+      <p className="text-gray-500 dark:text-gray-400 text-xs mt-0.5 tracking-wide">{label}</p>
     </div>
 
     {/* Tooltip */}
     {tooltipText && (
       <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-top-14 transition-all duration-300 pointer-events-none z-50">
-        <div className="bg-neutral-800 border border-white/20 text-gray-200 text-[11px] font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-xl">
+        <div className="bg-gray-100 dark:bg-neutral-800 border border-black/10 dark:border-white/20 text-gray-800 dark:text-gray-200 text-[11px] font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-xl">
           {tooltipText}
         </div>
         {/* Tooltip arrow */}
-        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-800 border-b border-r border-white/20 rotate-45" />
+        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-100 dark:bg-neutral-800 border-b border-r border-black/10 dark:border-white/20 rotate-45" />
       </div>
     )}
   </motion.div>
@@ -38,7 +38,7 @@ const FloatingCard = ({ icon: Icon, label, value, color, delay, className, toolt
 // Animated trading chart bars
 const ChartBar = ({ height, delay, active }) => (
   <motion.div
-    className={`w-5 rounded-t-sm ${active ? 'bg-gradient-to-t from-accent-cyan to-accent-cyan/50' : 'bg-white/10'}`}
+    className={`w-5 rounded-t-sm ${active ? 'bg-gradient-to-t from-accent-cyan to-accent-cyan/50' : 'bg-black/5 dark:bg-white/10'}`}
     initial={{ height: 0 }}
     animate={{ height }}
     transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
@@ -68,11 +68,11 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-20 bg-[#0B0B0B]">
+    <section className="relative min-h-screen flex items-center overflow-hidden pt-20 bg-gray-50 dark:bg-[#0B0B0B] transition-colors duration-500">
       <ParticleNetwork />
 
       {/* Background gradients */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0B0B0B] via-[#0d0d14] to-[#0B0B0B] z-0" />
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 dark:from-[#0B0B0B] dark:via-[#0d0d14] dark:to-[#0B0B0B] z-0 transition-colors duration-500" />
       <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-accent-purple/[0.07] rounded-full blur-[130px] pointer-events-none z-0" />
       <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent-cyan/[0.05] rounded-full blur-[100px] pointer-events-none z-0" />
 
@@ -87,10 +87,10 @@ const Hero = () => {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2.5 px-4 py-2 bg-white/[0.04] border border-white/10 rounded-full mb-8 w-fit hover:border-white/20 hover:bg-white/[0.07] transition-all duration-300 cursor-default"
+              className="inline-flex items-center gap-2.5 px-4 py-2 bg-black/[0.04] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 rounded-full mb-8 w-fit hover:border-black/20 dark:hover:border-white/20 hover:bg-black/[0.07] dark:hover:bg-white/[0.07] transition-all duration-300 cursor-default"
             >
               <Sparkles className="w-3.5 h-3.5 text-accent-cyan" />
-              <span className="text-[11px] text-gray-300 uppercase tracking-[0.2em] font-semibold">
+              <span className="text-[11px] text-gray-600 dark:text-gray-300 uppercase tracking-[0.2em] font-semibold">
                 {t('hero.eyebrow')}
               </span>
             </motion.div>
@@ -100,7 +100,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl md:text-5xl lg:text-[3.4rem] font-[800] text-white leading-[1.1] tracking-tight mb-6"
+              className="text-4xl md:text-5xl lg:text-[3.4rem] font-[800] text-gray-900 dark:text-white leading-[1.1] tracking-tight mb-6"
             >
               {t('hero.headingLine1')}{' '}
               <br className="hidden md:block" />
@@ -116,7 +116,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-base text-gray-400 max-w-xl mb-10 font-light leading-relaxed"
+              className="text-base text-gray-600 dark:text-gray-400 max-w-xl mb-10 font-light leading-relaxed"
             >
               {t('hero.subheading')}
             </motion.p>
@@ -131,16 +131,16 @@ const Hero = () => {
               <Button
                 onClick={handleCTAClick}
                 size="lg"
-                className="bg-white hover:bg-gray-100 text-black font-[800] px-8 py-6 text-sm rounded-full group uppercase tracking-widest transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+                className="bg-gray-900 text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-100 font-[800] px-8 py-6 text-sm rounded-full group uppercase tracking-widest transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
               >
                 {t('hero.ctaPrimary')}
-                <ArrowRight className="ml-2.5 text-black group-hover:translate-x-1.5 transition-transform duration-300" size={16} />
+                <ArrowRight className="ml-2.5 text-white dark:text-black group-hover:translate-x-1.5 transition-transform duration-300" size={16} />
               </Button>
               <Button
                 onClick={handleViewWorkClick}
                 size="lg"
                 variant="outline"
-                className="border-2 border-white/20 hover:bg-white/[0.07] hover:border-accent-cyan/50 text-white px-8 py-6 text-sm rounded-full font-bold uppercase tracking-widest transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,229,255,0.1)]"
+                className="border-2 border-black/20 dark:border-white/20 hover:bg-black/[0.03] dark:hover:bg-white/[0.07] hover:border-accent-cyan/50 dark:hover:border-accent-cyan/50 text-gray-900 dark:text-white px-8 py-6 text-sm rounded-full font-bold uppercase tracking-widest transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,229,255,0.1)]"
               >
                 {t('hero.ctaSecondary')}
               </Button>
@@ -151,11 +151,11 @@ const Hero = () => {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="mt-12 pt-8 border-t border-white/[0.06] grid grid-cols-3 gap-6 max-w-sm"
+              className="mt-12 pt-8 border-t border-black/[0.06] dark:border-white/[0.06] grid grid-cols-3 gap-6 max-w-sm"
             >
               {[{ value: t('hero.stat1Value'), label: t('hero.stat1Label') }, { value: t('hero.stat2Value'), label: t('hero.stat2Label') }, { value: t('hero.stat3Value'), label: t('hero.stat3Label') }].map((stat) => (
                 <div key={stat.label}>
-                  <p className="text-2xl font-[800] text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400">{stat.value}</p>
+                  <p className="text-2xl font-[800] text-transparent bg-clip-text bg-gradient-to-b from-gray-900 to-gray-500 dark:from-white dark:to-gray-400">{stat.value}</p>
                   <p className="text-[10px] text-gray-500 uppercase tracking-widest mt-1 font-medium">{stat.label}</p>
                 </div>
               ))}
@@ -170,7 +170,7 @@ const Hero = () => {
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-72 h-72 rounded-3xl bg-gradient-to-br from-[#141820] to-[#0d1018] border border-white/10 shadow-2xl flex flex-col items-center justify-center overflow-hidden"
+              className="relative w-72 h-72 rounded-3xl bg-gradient-to-br from-white to-gray-50 dark:from-[#141820] dark:to-[#0d1018] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col items-center justify-center overflow-hidden"
             >
               {/* Inner glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/10 to-accent-purple/10 opacity-60" />
@@ -232,7 +232,7 @@ const Hero = () => {
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-              className="absolute inset-0 rounded-full border border-dashed border-white/[0.06] pointer-events-none"
+              className="absolute inset-0 rounded-full border border-dashed border-black/[0.06] dark:border-white/[0.06] pointer-events-none"
               style={{ margin: '20px' }}
             />
             <motion.div
@@ -255,7 +255,7 @@ const Hero = () => {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-5 h-9 border-2 border-white/20 rounded-full flex items-start justify-center p-1.5 hover:border-white/40 transition-colors duration-300"
+          className="w-5 h-9 border-2 border-black/20 dark:border-white/20 rounded-full flex items-start justify-center p-1.5 hover:border-black/40 dark:hover:border-white/40 transition-colors duration-300"
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}

@@ -3,7 +3,6 @@ import { Instagram, Facebook, Mail, Phone, MapPin, ArrowRight } from 'lucide-rea
 import { toast } from "@/components/ui/use-toast";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
 import OptimizedImage from './OptimizedImage';
 
 const XIcon = ({ size = 20 }) => (
@@ -12,11 +11,10 @@ const XIcon = ({ size = 20 }) => (
   </svg>
 );
 
-// ─── Configure your social media URLs here ───────────────────────────────────
 const SOCIAL_LINKS = {
-  twitter: 'https://x.com/kapserfx',       // Update with real X/Twitter handle
-  instagram: 'https://instagram.com/kapserfx', // Update with real Instagram URL
-  facebook: 'https://facebook.com/kapserfx',   // Update with real Facebook URL
+  twitter: 'https://x.com/kapserfx',
+  instagram: 'https://instagram.com/kapserfx',
+  facebook: 'https://facebook.com/kapserfx',
 };
 
 const Footer = () => {
@@ -25,8 +23,8 @@ const Footer = () => {
     const handleNotImplemented = (e) => {
         e?.preventDefault();
         toast({
-            title: "Feature Not Implemented 🚧",
-            description: "This page isn't built yet, but you can request it in your next prompt! 🚀",
+            title: "Coming Soon 🚧",
+            description: "This page is currently being redesigned.",
         });
     };
 
@@ -62,7 +60,6 @@ const Footer = () => {
 
     const onSubmit = async (data) => {
         try {
-            // Save to a separate Newsletter list in localStorage
             const existingSubscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
             const newSubscriber = {
                 id: Date.now(),
@@ -72,8 +69,8 @@ const Footer = () => {
             localStorage.setItem('newsletterSubscribers', JSON.stringify([newSubscriber, ...existingSubscribers]));
             
             toast({
-                title: "Subscribed! 🎉",
-                description: "Thanks for subscribing to our newsletter.",
+                title: "Welcome Aboard! 🎉",
+                description: "You've successfully subscribed to our insights newsletter.",
             });
             reset();
         } catch (error) {
@@ -98,9 +95,9 @@ const Footer = () => {
     const quickLinks = [
         { name: 'Home', href: '/' },
         { name: 'Services', href: '/#services' },
-        { name: 'About', href: '/about-us' },
-        { name: 'Blog', href: '/blog' },
-        { name: 'Contact', href: '/contact' },
+        { name: 'About Us', href: '/about-us' },
+        { name: 'Our Blog', href: '/blog' },
+        { name: 'Contact Sales', href: '/contact' },
         { name: 'Brokerage Calculator', href: '/calculator' },
     ];
 
@@ -114,94 +111,102 @@ const Footer = () => {
             title: 'How to Launch a Forex Brokerage in 3 Days Using Turnkey Solutions',
             slug: 'how-to-launch-a-forex-brokerage-in-3-days',
             image: 'https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=400&auto=format&fit=crop&q=80'
-        },
-        {
-            title: 'Best Forex Trading Platforms for Brokers in 2026 (MT5, cTrader & More)',
-            slug: 'best-forex-trading-platforms-for-brokers-in-2026',
-            image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=400&auto=format&fit=crop&q=80'
         }
     ];
 
     return (
-        <footer className="bg-[#0B0B0B] border-t border-white/[0.06] pt-16 pb-12 font-sans">
-            <div className="container mx-auto px-6 max-w-7xl">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
+        <footer className="bg-white dark:bg-[#050505] transition-colors duration-500 pt-24 pb-8 relative overflow-hidden border-t border-black/5 dark:border-white/5">
+            {/* Ambient Background */}
+            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-accent-cyan/[0.03] rounded-full blur-[150px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-accent-purple/[0.03] rounded-full blur-[150px] pointer-events-none" />
+
+            <div className="container mx-auto px-6 max-w-7xl relative z-10">
+                {/* Massive CTA Section */}
+                <div className="bg-black/5 dark:bg-white/5 backdrop-blur-md p-12 md:p-16 rounded-3xl border border-black/5 dark:border-white/5 mb-20 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-accent-cyan/5 to-accent-purple/5 dark:from-accent-cyan/10 dark:to-accent-purple/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                    <div className="flex flex-col lg:flex-row justify-between items-center gap-12 relative z-10">
+                        <div className="max-w-xl text-center lg:text-left">
+                            <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-4">
+                                Ready to launch your <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan to-accent-purple">Brokerage?</span>
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-400 text-lg font-light leading-relaxed">
+                                Join the industry leaders and get access to exclusive market insights, regulatory updates, and technology trends.
+                            </p>
+                        </div>
+                        <div className="w-full lg:w-auto">
+                            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col sm:flex-row gap-3 w-full lg:w-[450px]">
+                                <div className="relative w-full">
+                                    <input 
+                                        type="email" 
+                                        placeholder="Enter your email address" 
+                                        {...register("email", { 
+                                            required: "Email is required",
+                                            pattern: {
+                                                value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                                                message: "Invalid email address"
+                                            }
+                                        })}
+                                        className="w-full h-14 pl-6 pr-4 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 outline-none focus:border-accent-cyan/50 focus:bg-black/10 dark:focus:bg-white/10 transition-all duration-300 backdrop-blur-md"
+                                    />
+                                    {errors.email && <span className="absolute -bottom-6 left-2 text-red-500 dark:text-red-400 text-xs">{errors.email.message}</span>}
+                                </div>
+                                <button disabled={isSubmitting} type="submit" className="h-14 px-8 bg-gray-900 text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 font-bold rounded-xl transition-colors flex items-center justify-center shrink-0 disabled:opacity-50 group/btn">
+                                    Subscribe <ArrowRight size={18} className="ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-20">
                     
-                    {/* Column 1: Brand & Policies */}
-                    <div className="lg:col-span-3">
-                        <div className="mb-6">
-                            <h3 className="text-4xl font-bold tracking-widest text-white">
+                    {/* Brand Column */}
+                    <div className="lg:col-span-4">
+                        <div className="mb-8">
+                            <h3 className="text-4xl font-[900] tracking-tighter text-gray-900 dark:text-white flex items-center gap-2">
+                                <span className="w-4 h-4 bg-gradient-to-br from-accent-cyan to-accent-purple rounded-sm inline-block"></span>
                                 KAPSERFX
                             </h3>
-                            <p className="text-xs text-gray-400 tracking-[0.2em] mt-1">IT SOLUTIONS EST</p>
+                            <p className="text-xs font-bold text-accent-cyan tracking-[0.2em] mt-2 uppercase">IT Solutions Est</p>
                         </div>
-                        <p className="text-gray-300 mb-6 text-sm leading-relaxed">
-                            At KAPSERFX, we are your trusted partner in navigating the dynamic landscape of the Forex market.
+                        <p className="text-gray-600 dark:text-gray-400 mb-8 font-light leading-relaxed max-w-sm">
+                            Your trusted institutional partner in navigating the dynamic landscape of the global Forex market with Tier-1 infrastructure.
                         </p>
-                        <div className="flex gap-3 mb-10">
-                            <a 
-                                href={SOCIAL_LINKS.twitter}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Follow us on X (Twitter)"
-                                className="p-2 border border-white/20 rounded hover:border-accent-cyan hover:text-accent-cyan hover:bg-accent-cyan/10 text-gray-300 transition-all duration-300"
-                            >
-                                <XIcon size={18} />
-                            </a>
-                            <a 
-                                href={SOCIAL_LINKS.instagram}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Follow us on Instagram"
-                                className="p-2 border border-white/20 rounded hover:border-accent-cyan hover:text-accent-cyan hover:bg-accent-cyan/10 text-gray-300 transition-all duration-300"
-                            >
-                                <Instagram size={18} />
-                            </a>
-                            <a 
-                                href={SOCIAL_LINKS.facebook}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Follow us on Facebook"
-                                className="p-2 border border-white/20 rounded hover:border-accent-cyan hover:text-accent-cyan hover:bg-accent-cyan/10 text-gray-300 transition-all duration-300"
-                            >
-                                <Facebook size={18} />
-                            </a>
-                        </div>
-
-                        <div>
-                            <h4 className="text-accent-cyan font-bold mb-2">Policies</h4>
-                            <div className="h-0.5 w-8 bg-gradient-to-r from-accent-cyan to-accent-purple mb-4"></div>
-                            <ul className="space-y-2">
-                                {policies.map(policy => (
-                                    <li key={policy.name}>
-                                        <a 
-                                            href={policy.href}
-                                            onClick={(e) => {
-                                                if(policy.href === '#') handleNotImplemented(e);
-                                                else handleNavClick(e, policy.href);
-                                            }}
-                                            className="text-sm text-gray-400 hover:text-white transition-colors"
-                                        >
-                                            {policy.name}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
+                        
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400 font-light group cursor-pointer">
+                                <div className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:border-accent-cyan transition-colors">
+                                    <Mail size={16} className="group-hover:text-accent-cyan transition-colors" />
+                                </div>
+                                <a href="mailto:enquiry@kapserfx.com" className="hover:text-gray-900 dark:hover:text-white transition-colors">enquiry@kapserfx.com</a>
+                            </div>
+                            <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400 font-light group cursor-pointer">
+                                <div className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:border-accent-cyan transition-colors">
+                                    <Phone size={16} className="group-hover:text-accent-cyan transition-colors" />
+                                </div>
+                                <a href="tel:+971568795828" className="hover:text-gray-900 dark:hover:text-white transition-colors">+971568795828</a>
+                            </div>
+                            <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400 font-light group cursor-pointer">
+                                <div className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:border-accent-cyan transition-colors">
+                                    <MapPin size={16} className="group-hover:text-accent-cyan transition-colors" />
+                                </div>
+                                <span>2807, Churchill Executive Tower, Business Bay, Dubai.</span>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Column 2: Quick Links */}
-                    <div className="lg:col-span-2 lg:ml-8">
-                        <h4 className="text-white font-bold text-lg mb-2">Quick Links</h4>
-                        <div className="h-0.5 w-12 bg-gradient-to-r from-accent-cyan to-accent-purple mb-6"></div>
+                    {/* Quick Links */}
+                    <div className="lg:col-span-2 lg:ml-auto">
+                        <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-6">Company</h4>
                         <ul className="space-y-4">
                             {quickLinks.map(link => (
                                 <li key={link.name}>
                                     <a 
                                         href={link.href}
                                         onClick={(e) => handleNavClick(e, link.href)}
-                                        className="text-sm text-gray-300 hover:text-white transition-colors"
+                                        className="text-gray-600 dark:text-gray-400 font-light hover:text-accent-cyan transition-colors flex items-center gap-2 group"
                                     >
+                                        <span className="w-1.5 h-1.5 rounded-full bg-black/20 dark:bg-white/20 group-hover:bg-accent-cyan transition-colors"></span>
                                         {link.name}
                                     </a>
                                 </li>
@@ -209,20 +214,41 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Column 3: Latest Posts */}
-                    <div className="lg:col-span-4">
-                        <h4 className="text-white font-bold text-lg mb-2">Latest Posts</h4>
-                        <div className="h-0.5 w-12 bg-gradient-to-r from-accent-cyan to-accent-purple mb-6"></div>
+                    {/* Policies */}
+                    <div className="lg:col-span-3">
+                        <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-6">Legal & Compliance</h4>
+                        <ul className="space-y-4">
+                            {policies.map(policy => (
+                                <li key={policy.name}>
+                                    <a 
+                                        href={policy.href}
+                                        onClick={(e) => {
+                                            if(policy.href === '#') handleNotImplemented(e);
+                                            else handleNavClick(e, policy.href);
+                                        }}
+                                        className="text-gray-600 dark:text-gray-400 font-light hover:text-accent-purple transition-colors flex items-center gap-2 group"
+                                    >
+                                        <span className="w-1.5 h-1.5 rounded-full bg-black/20 dark:bg-white/20 group-hover:bg-accent-purple transition-colors"></span>
+                                        {policy.name}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Latest Posts */}
+                    <div className="lg:col-span-3">
+                        <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-6">Market Insights</h4>
                         <div className="space-y-6">
                             {latestPosts.map((post, idx) => (
                                 <div key={idx} className="flex gap-4 group cursor-pointer" onClick={() => {
                                     navigate(`/blog/${post.slug}`);
                                     window.scrollTo({ top: 0, behavior: 'smooth' });
                                 }}>
-                                    <div className="w-20 h-14 shrink-0 overflow-hidden rounded">
-                                        <OptimizedImage src={post.image} alt={post.title} width={80} height={56} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                    <div className="w-20 h-16 shrink-0 overflow-hidden rounded-xl border border-black/10 dark:border-white/10">
+                                        <OptimizedImage src={post.image} alt={post.title} width={80} height={64} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                                     </div>
-                                    <h5 className="text-sm text-gray-300 group-hover:text-white transition-colors leading-snug">
+                                    <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-accent-cyan transition-colors leading-snug line-clamp-3">
                                         {post.title}
                                     </h5>
                                 </div>
@@ -230,48 +256,43 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* Column 4: Contact Us */}
-                    <div className="lg:col-span-3">
-                        <h4 className="text-white font-bold text-lg mb-2">Contact Us</h4>
-                        <div className="h-0.5 w-12 bg-gradient-to-r from-accent-cyan to-accent-purple mb-6"></div>
-                        
-                        <div className="space-y-4 mb-8">
-                            <div className="flex gap-3 text-gray-300 text-sm">
-                                <Mail size={18} className="shrink-0 mt-0.5 text-white" />
-                                <a href="mailto:enquiry@kapserfx.com" className="hover:text-white transition-colors">enquiry@kapserfx.com</a>
-                            </div>
-                            <div className="flex gap-3 text-gray-300 text-sm">
-                                <Phone size={18} className="shrink-0 mt-0.5 text-white" />
-                                <a href="tel:+971568795828" className="hover:text-white transition-colors">+971568795828</a>
-                            </div>
-                            <div className="flex gap-3 text-gray-300 text-sm">
-                                <MapPin size={18} className="shrink-0 mt-0.5 text-white" />
-                                <span>2807, Churchill Executive Tower,<br/>Business Bay, Dubai, UAE.</span>
-                            </div>
-                        </div>
+                </div>
 
-                        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2 relative">
-                            <div className="flex h-12 rounded overflow-hidden">
-                                <input 
-                                    type="email" 
-                                    placeholder="Email" 
-                                    {...register("email", { 
-                                        required: "Email is required",
-                                        pattern: {
-                                            value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                                            message: "Invalid email address"
-                                        }
-                                    })}
-                                    className="w-full px-4 bg-white text-black outline-none"
-                                />
-                                <button disabled={isSubmitting} type="submit" className="px-6 bg-gradient-to-r from-accent-cyan to-accent-purple text-white hover:opacity-90 transition-opacity flex items-center justify-center shrink-0 disabled:opacity-50">
-                                    <ArrowRight size={18} />
-                                </button>
-                            </div>
-                            {errors.email && <span className="text-red-400 text-xs">{errors.email.message}</span>}
-                        </form>
+                {/* Bottom Bar */}
+                <div className="pt-8 border-t border-black/10 dark:border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <p className="text-sm text-gray-500 font-light">
+                        &copy; {new Date().getFullYear()} KAPSERFX IT Solutions Est. All rights reserved.
+                    </p>
+                    
+                    <div className="flex gap-4">
+                        <a 
+                            href={SOCIAL_LINKS.twitter}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Follow us on X (Twitter)"
+                            className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/10 hover:border-black/20 dark:hover:border-white/20 transition-all duration-300"
+                        >
+                            <XIcon size={16} />
+                        </a>
+                        <a 
+                            href={SOCIAL_LINKS.instagram}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Follow us on Instagram"
+                            className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/10 hover:border-black/20 dark:hover:border-white/20 transition-all duration-300"
+                        >
+                            <Instagram size={16} />
+                        </a>
+                        <a 
+                            href={SOCIAL_LINKS.facebook}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Follow us on Facebook"
+                            className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/10 hover:border-black/20 dark:hover:border-white/20 transition-all duration-300"
+                        >
+                            <Facebook size={16} />
+                        </a>
                     </div>
-
                 </div>
             </div>
         </footer>

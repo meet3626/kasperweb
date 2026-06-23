@@ -9,6 +9,8 @@ const rateLimit = require('express-rate-limit');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const mfaRoutes = require('./routes/mfaRoutes');
+const blogRoutes = require('./routes/blogRoutes');
+const leadRoutes = require('./routes/leadRoutes');
 
 // Load env vars
 dotenv.config();
@@ -46,11 +48,11 @@ app.use(cookieParser());
 // Prevent XSS attacks
 // app.use(xss());
 
-
-
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/mfa', mfaRoutes);
+app.use('/api/leads', leadRoutes);
+app.use('/api/blogs', blogRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {

@@ -25,20 +25,20 @@ const AdminDashboard = React.lazy(() => import('@/pages/Admin/AdminDashboard'));
 
 function PageLoader() {
   return (
-    <div className="min-h-screen bg-[#0C0D0D] flex items-center justify-center">
-      <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="w-12 h-12 border-4 border-accent-cyan border-t-transparent rounded-full animate-spin"></div>
     </div>
   );
 }
 
 function MaintenanceMode() {
   return (
-    <div className="min-h-screen bg-[#0C0D0D] flex flex-col items-center justify-center p-6 text-center">
-      <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Under Maintenance</h1>
-      <p className="text-xl text-gray-400 max-w-lg mb-8">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center">
+      <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Under Maintenance</h1>
+      <p className="text-xl text-muted-foreground max-w-lg mb-8">
         We are currently upgrading our systems to serve you better. Please check back shortly.
       </p>
-      <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="w-16 h-16 border-4 border-accent-cyan border-t-transparent rounded-full animate-spin"></div>
     </div>
   );
 }
