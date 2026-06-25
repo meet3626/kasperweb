@@ -189,7 +189,7 @@ const Project = () => {
     window.scrollTo(0, 0);
   }, [projectId]);
 
-  return <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition} className="bg-[#0C0D0D] text-white">
+  return <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition} className="text-white">
       <Helmet>
         <title>{project.title} - Project Showcase</title>
         <meta name="description" content={`Details of the ${project.title} project, showcasing our creative solutions and results.`} />
@@ -210,7 +210,7 @@ const Project = () => {
         <SectionAnimator>
             <div className="container mx-auto px-6 mb-16">
                  <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-accent-purple/10">
-                    <img class="w-full h-full object-cover" alt={project.images.hero.alt} src="https://horizons-cdn.hostinger.com/e244d3b2-f8c1-4974-9afc-b7949c8a31be/gemini_generated_image_n6u5epn6u5epn6u5-5ABrF.png" />
+                    <img class="w-full h-full object-cover" alt={project.images.hero.alt} src="/images/trading_terminal_hero.png" />
                  </div>
             </div>
         </SectionAnimator>
@@ -222,10 +222,10 @@ const Project = () => {
                     {/* Two images */}
                     <div className="grid md:grid-cols-2 gap-8">
                         <div className="aspect-square rounded-2xl overflow-hidden">
-                           <img class="w-full h-full object-cover" alt={project.images.gallery[1].alt} src="https://horizons-cdn.hostinger.com/e244d3b2-f8c1-4974-9afc-b7949c8a31be/gemini_generated_image_mxgp1bmxgp1bmxgp-IDwMQ.png" />
+                           <img class="w-full h-full object-cover" alt={project.images.gallery[1].alt} src="/images/mobile_trading_app.png" />
                         </div>
                         <div className="aspect-square rounded-2xl overflow-hidden">
-                            <img class="w-full h-full object-cover" alt={project.images.gallery[2].alt} src="https://horizons-cdn.hostinger.com/e244d3b2-f8c1-4974-9afc-b7949c8a31be/gemini_generated_image_mxgp1bmxgp1bmxgp-1-RqwfI.png" />
+                            <img class="w-full h-full object-cover" alt={project.images.gallery[2].alt} src="/images/server_infrastructure.png" />
                         </div>
                     </div>
                 </div>
@@ -252,7 +252,7 @@ const Project = () => {
         <SectionAnimator>
             <div className="container mx-auto px-6 mb-16">
                 <div className="aspect-video rounded-2xl overflow-hidden">
-                    <img class="w-full h-full object-cover" alt={project.images.gallery2[0].alt} src="https://horizons-cdn.hostinger.com/e244d3b2-f8c1-4974-9afc-b7949c8a31be/professional-exchange-BmQpX.png" />
+                    <img class="w-full h-full object-cover" alt={project.images.gallery2[0].alt} src="/images/corporate_handshake.png" />
                 </div>
             </div>
         </SectionAnimator>

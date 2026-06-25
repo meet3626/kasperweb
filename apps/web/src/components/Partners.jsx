@@ -147,8 +147,8 @@ const MarqueeRow = ({ items, direction = 'left', duration = 38 }) => {
   return (
     <div className="relative overflow-hidden group/track">
       {/* Left + Right fade masks */}
-      <div className="pointer-events-none absolute left-0 top-0 h-full w-32 z-10 bg-gradient-to-r from-[#0B0B0B] to-transparent" />
-      <div className="pointer-events-none absolute right-0 top-0 h-full w-32 z-10 bg-gradient-to-l from-[#0B0B0B] to-transparent" />
+      <div className="pointer-events-none absolute left-0 top-0 h-full w-32 z-10 bg-gradient-to-r from-transparent to-transparent" />
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-32 z-10 bg-gradient-to-l from-transparent to-transparent" />
 
       <div
         className={`flex ${dirClass} group-hover/track:[animation-play-state:paused]`}
@@ -170,7 +170,7 @@ const Partners = () => {
   return (
     <section className="relative py-24 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0B0B0B] via-[#0c0f18] to-[#0B0B0B]" />
+      
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-accent-cyan/[0.03] rounded-full blur-[120px] pointer-events-none" />
 

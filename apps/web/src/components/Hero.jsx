@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles, TrendingUp, Shield, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import ParticleNetwork from '@/components/ParticleNetwork';
 import { useTranslation } from 'react-i18next';
+import { useMotionValue, useTransform } from 'framer-motion';
 
 // Floating animated stat card used in the side panel
 const FloatingCard = ({ icon: Icon, label, value, color, delay, className, tooltipText }) => (
@@ -54,6 +54,25 @@ const Hero = () => {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // 3D Parallax Mouse Tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const rotateX = useTransform(mouseY, [-500, 500], [10, -10]);
+  const rotateY = useTransform(mouseX, [-500, 500], [-10, 10]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+  
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
   const bars = [
     { height: 40, active: false },
     { height: 65, active: false },
@@ -68,15 +87,15 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-20 bg-gray-50 dark:bg-[#0B0B0B] transition-colors duration-500">
-      <ParticleNetwork />
+    <section className="relative min-h-screen flex items-center overflow-hidden pt-20 transition-colors duration-500">
+
 
       {/* Background gradients */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 dark:from-[#0B0B0B] dark:via-[#0d0d14] dark:to-[#0B0B0B] z-0 transition-colors duration-500" />
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 dark:from-[#0B0B0B] dark:via-[#0d0d14] dark:to-[#0B0B0B] z-0 transition-colors duration-500 opacity-0" />
       <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-accent-purple/[0.07] rounded-full blur-[130px] pointer-events-none z-0" />
       <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent-cyan/[0.05] rounded-full blur-[100px] pointer-events-none z-0" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 relative z-10 pointer-events-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
 
           {/* ── LEFT: Copy ──────────────────────────────── */}
@@ -95,21 +114,29 @@ const Hero = () => {
               </span>
             </motion.div>
 
-            {/* Heading */}
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl md:text-5xl lg:text-[3.4rem] font-[800] text-gray-900 dark:text-white leading-[1.1] tracking-tight mb-6"
+            {/* Interactive 3D CSS Text */}
+            <motion.div
+              style={{ perspective: 1000 }}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              className="py-10 -my-10"
             >
-              {t('hero.headingLine1')}{' '}
-              <br className="hidden md:block" />
-              {t('hero.headingLine2')}{' '}
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan to-accent-purple">
-                {t('hero.headingAccent')}
-              </span>
-            </motion.h1>
+              <motion.h1
+                style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="text-4xl md:text-5xl lg:text-6xl font-[800] text-gray-900 dark:text-white leading-[1.1] tracking-tight mb-6 drop-shadow-2xl"
+              >
+                <span className="block translate-z-[20px] shadow-black/50">{t('hero.headingLine1')}</span>
+                <span className="block mt-2 translate-z-[40px]">
+                  {t('hero.headingLine2')}{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan to-accent-purple italic font-light pr-2">
+                    {t('hero.headingAccent')}
+                  </span>
+                </span>
+              </motion.h1>
+            </motion.div>
 
             {/* Subheading */}
             <motion.p
@@ -162,86 +189,7 @@ const Hero = () => {
             </motion.div>
           </div>
 
-          {/* ── RIGHT: Animated Visual Panel ──────────── */}
-          <div className="relative hidden lg:flex items-center justify-center h-[520px]">
 
-            {/* Central glowing orb / card */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-72 h-72 rounded-3xl bg-gradient-to-br from-white to-gray-50 dark:from-[#141820] dark:to-[#0d1018] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col items-center justify-center overflow-hidden"
-            >
-              {/* Inner glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/10 to-accent-purple/10 opacity-60" />
-              <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-accent-cyan/20 rounded-full blur-2xl" />
-
-              {/* Chart bars */}
-              <div className="relative z-10 flex items-end gap-1.5 px-6 mb-4">
-                {bars.map((bar, i) => (
-                  <ChartBar key={i} height={bar.height} active={bar.active} delay={0.6 + i * 0.06} />
-                ))}
-              </div>
-
-              {/* Live indicator */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.4 }}
-                className="relative z-10 flex items-center gap-2 px-4 py-2 bg-accent-cyan/10 border border-accent-cyan/30 rounded-full"
-              >
-                <motion.div
-                  animate={{ scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                  className="w-2 h-2 bg-accent-cyan rounded-full"
-                />
-                <span className="text-accent-cyan text-xs font-bold uppercase tracking-widest">{t('hero.liveMarkets')}</span>
-              </motion.div>
-            </motion.div>
-
-            {/* Floating stat cards */}
-            <FloatingCard
-              icon={TrendingUp}
-              label="Execution Speed"
-              value="<1ms"
-              color="bg-gradient-to-br from-accent-cyan to-accent-cyan/50"
-              delay={0.8}
-              className="-top-4 -left-8"
-              tooltipText="Co-located servers in London LD4 & New York NY4"
-            />
-            <FloatingCard
-              icon={Shield}
-              label="License Ready"
-              value="FSC · CySEC"
-              color="bg-gradient-to-br from-accent-purple to-accent-purple/50"
-              delay={1.0}
-              className="-bottom-4 -left-4"
-              tooltipText="Pre-cleared regulatory frameworks & corporate structuring"
-            />
-            <FloatingCard
-              icon={Zap}
-              label="Tier-1 Liquidity"
-              value="Deep Books"
-              color="bg-gradient-to-br from-orange-500 to-orange-500/50"
-              delay={1.2}
-              className="top-16 -right-8"
-              tooltipText="Direct market access to Top-Tier Prime of Primes"
-            />
-
-            {/* Rotating orbital ring */}
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-              className="absolute inset-0 rounded-full border border-dashed border-black/[0.06] dark:border-white/[0.06] pointer-events-none"
-              style={{ margin: '20px' }}
-            />
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-              className="absolute inset-0 rounded-full border border-dashed border-accent-cyan/[0.08] pointer-events-none"
-              style={{ margin: '50px' }}
-            />
-          </div>
         </div>
       </div>
 

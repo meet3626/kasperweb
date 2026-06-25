@@ -220,7 +220,7 @@ const BrokerSetupCalculator = () => {
   const currentStep = steps[currentStepIndex];
 
   return (
-    <div className="min-h-screen bg-[#0B0B0B] text-white pt-24 pb-12 px-4 sm:px-6">
+    <div className="min-h-screen text-white pt-24 pb-12 px-4 sm:px-6">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold uppercase tracking-wider mb-4">

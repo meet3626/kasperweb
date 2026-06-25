@@ -139,3 +139,52 @@
 .animate-marquee-right:hover {
   animation-play-state: paused;
 }
+
+/* ── 3D Scroll Journey Overrides ───────────────────────────────────────── */
+.home-scroll-container section,
+.home-scroll-container .bg-gray-50,
+.home-scroll-container .bg-\[\#0B0B0B\],
+.home-scroll-container .dark\:bg-\[\#0B0B0B\],
+.home-scroll-container .dark\:bg-\[\#09090b\],
+.home-scroll-container .dark\:bg-\[\#050505\] {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* ── Google Translate UI Overrides ─────────────────────────────────────── */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+body, html {
+  top: 0px !important;
+  margin-top: 0px !important;
+  position: static !important;
+}
+
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#google_translate_element,
+.skiptranslate.goog-te-gadget {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+}
+
+/* Sometimes Google adds a specific div for the banner */
+.VIpgJd-ZVi9od-ORHb-OEVmcd,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf {
+  display: none !important;
+}

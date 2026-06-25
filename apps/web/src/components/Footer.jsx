@@ -85,11 +85,8 @@ const Footer = () => {
     const policies = [
         { name: 'Privacy Policy', href: '/privacy-policy' },
         { name: 'Terms & Conditions', href: '/terms-and-conditions' },
-        { name: 'Disclaimer Policy', href: '/disclaimer' },
-        { name: 'Cookie Policy', href: '/cookie-policy' },
         { name: 'Refund & Cancellation Policy', href: '/refund-policy' },
         { name: 'AML & Compliance Policy', href: '/aml-policy' },
-        { name: 'Data Protection Policy', href: '/data-protection-policy' },
     ];
 
     const quickLinks = [
@@ -115,7 +112,7 @@ const Footer = () => {
     ];
 
     return (
-        <footer className="bg-white dark:bg-[#050505] transition-colors duration-500 pt-24 pb-8 relative overflow-hidden border-t border-black/5 dark:border-white/5">
+        <footer className="bg-transparent transition-colors duration-500 pt-24 pb-8 relative overflow-hidden border-t border-black/5 dark:border-white/5">
             {/* Ambient Background */}
             <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-accent-cyan/[0.03] rounded-full blur-[150px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-accent-purple/[0.03] rounded-full blur-[150px] pointer-events-none" />

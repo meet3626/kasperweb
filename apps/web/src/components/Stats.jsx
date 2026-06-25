@@ -66,7 +66,7 @@ const Stats = ({ customStats }) => {
   const isProjectPage = !!customStats;
 
   return (
-    <section id="stats-section" className="py-24 bg-gray-50 dark:bg-[#050505] transition-colors duration-500 relative overflow-hidden border-t border-black/5 dark:border-white/5">
+    <section id="stats-section" className="py-24 transition-colors duration-500 relative overflow-hidden border-t border-black/5 dark:border-white/5">
       {/* Background Gradients */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-accent-cyan/10 rounded-full blur-[150px] pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
       

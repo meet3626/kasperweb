@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 
 const DataProtectionPolicy = () => {
   return (
-    <div className="pt-32 pb-24 bg-[#080B10] min-h-screen">
+    <div className="pt-32 pb-24 min-h-screen">
       <Helmet>
         <title>Data Protection Policy | KAPSERFX IT SOLUTIONS EST</title>
       </Helmet>

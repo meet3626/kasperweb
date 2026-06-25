@@ -6,7 +6,7 @@ import { Building2, Target, ShieldCheck, ArrowRight } from 'lucide-react';
 
 const AboutUs = () => {
   return (
-    <div className="min-h-screen bg-[#050505] text-white pt-32 pb-12 relative overflow-hidden">
+    <div className="min-h-screen text-white pt-32 pb-12 relative overflow-hidden">
       <SEOHead 
         title="About Us | KAPSERFX IT SOLUTIONS EST"
         description="Learn about our mission to help businesses streamline operations and accelerate growth with expert technology consulting."

@@ -23,6 +23,11 @@ const adminSchema = new mongoose.Schema({
     settings: { type: Boolean, default: false },
     manage_admins: { type: Boolean, default: false },
   },
+  role: {
+    type: String,
+    enum: ['Super Admin', 'Editor'],
+    default: 'Editor'
+  },
   mfaEnabled: {
     type: Boolean,
     default: false

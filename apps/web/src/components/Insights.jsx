@@ -10,7 +10,7 @@ const Insights = () => {
   // Get first 3 posts
   const insights = blogData.slice(0, 3);
   return (
-    <section id="insights" className="py-24 bg-[#080B10]">
+    <section id="insights" className="py-24">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
           <div className="max-w-2xl">

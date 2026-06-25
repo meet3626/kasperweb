@@ -13,15 +13,14 @@ const Blog = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/blogs');
-        const data = await response.json();
-        if (data.success) {
-          setBlogs(data.data);
+        const saved = localStorage.getItem('adminBlogs');
+        if (saved) {
+          setBlogs(JSON.parse(saved));
         } else {
-          setError('Failed to fetch blogs');
+          setBlogs([]);
         }
       } catch (err) {
-        setError('Server error while fetching blogs');
+        setError('Error loading blogs');
       } finally {
         setLoading(false);
       }
@@ -30,7 +29,7 @@ const Blog = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0B0B0B] text-gray-900 dark:text-white transition-colors duration-500 pt-24 pb-12">
+    <div className="min-h-screen text-white pt-24 pb-12">
       
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
@@ -56,7 +55,7 @@ const Blog = () => {
       </section>
 
       {/* Blog Grid Section */}
-      <section className="py-12 bg-gray-50 dark:bg-[#121212] transition-colors duration-500">
+      <section className="py-12 transition-colors duration-500">
         <div className="container mx-auto px-6 max-w-7xl">
           {loading ? (
              <div className="text-center py-20 text-gray-500">Loading insights...</div>
@@ -68,13 +67,13 @@ const Blog = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {blogs.map((post, index) => (
                 <motion.div
-                  key={post._id}
+                  key={post.id || index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   onClick={() => navigate(`/blog/${post.slug}`)}
-                  className="bg-white dark:bg-[#0B0B0B] border border-black/5 dark:border-white/5 rounded-3xl overflow-hidden hover:border-black/20 dark:hover:border-white/20 transition-all duration-300 group flex flex-col h-full cursor-pointer shadow-lg dark:shadow-none"
+                  className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden hover:border-accent-cyan/30 hover:shadow-[0_0_30px_rgba(0,229,255,0.15)] transition-all duration-500 group flex flex-col h-full cursor-pointer shadow-none"
                 >
                   {/* Image Container with Zoom effect */}
                   <div className="relative aspect-[16/10] overflow-hidden">
@@ -103,7 +102,7 @@ const Blog = () => {
                       </div>
                     </div>
 
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-snug mb-3 group-hover:text-accent-cyan transition-colors line-clamp-2">
+                    <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-accent-cyan transition-colors">
                       {post.title}
                     </h3>
                     
@@ -123,7 +122,7 @@ const Blog = () => {
           {/* Load More Button */}
           {!loading && blogs.length > 0 && (
             <div className="mt-16 text-center">
-              <button className="px-8 py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/10 rounded-full font-bold uppercase tracking-widest text-sm transition-colors text-gray-900 dark:text-white">
+              <button className="px-8 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full font-bold uppercase tracking-widest text-sm transition-colors text-white">
                 Load More Posts
               </button>
             </div>

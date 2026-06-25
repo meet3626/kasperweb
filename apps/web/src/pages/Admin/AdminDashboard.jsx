@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import Admin3DBackground from '@/components/Admin3DBackground';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, LayoutDashboard, Users, Settings, Mail, Activity, ArrowUpRight } from 'lucide-react';
+import { LogOut, LayoutDashboard, Users, Settings, Mail, Activity, ArrowUpRight, BarChart as BarChartIcon, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -11,6 +15,12 @@ export default function AdminDashboard() {
   const [maintenanceMode, setMaintenanceMode] = useState('Disable');
   const [currentAdmin, setCurrentAdmin] = useState(null);
   const [adminUsers, setAdminUsers] = useState([]);
+  const [blogs, setBlogs] = useState(() => {
+    const saved = localStorage.getItem('adminBlogs');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [editingBlog, setEditingBlog] = useState(null);
+  const [blogForm, setBlogForm] = useState({ title: '', content: '', coverImage: '' });
 
   useEffect(() => {
     // Auth check
@@ -222,6 +232,54 @@ export default function AdminDashboard() {
     setShowAdminModal(true);
   };
 
+  const handleUploadImage = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    // In a real implementation, this would send to /api/upload
+    // const formData = new FormData();
+    // formData.append('image', file);
+    // const res = await fetch('/api/upload', { method: 'POST', body: formData, headers: { Authorization: `Bearer ...` } });
+    // const data = await res.json();
+    // if (data.success) setBlogForm({ ...blogForm, coverImage: data.data.url });
+    
+    alert('Image upload endpoint is prepared in backend. Cloudinary will process this.');
+    setBlogForm({ ...blogForm, coverImage: URL.createObjectURL(file) });
+  };
+
+  const handleSaveBlog = (e) => {
+    e.preventDefault();
+    let updatedBlogs;
+    const slug = blogForm.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    
+    if (editingBlog) {
+      updatedBlogs = blogs.map(b => b.id === editingBlog.id ? { ...b, ...blogForm, slug: slug || b.slug } : b);
+    } else {
+      updatedBlogs = [{ 
+        id: Date.now(), 
+        ...blogForm, 
+        slug: slug,
+        excerpt: blogForm.content.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...',
+        category: 'Forex Insights',
+        author: { name: currentAdmin?.name || 'Admin' },
+        createdAt: new Date().toISOString(),
+        date: new Date().toLocaleDateString() 
+      }, ...blogs];
+    }
+    setBlogs(updatedBlogs);
+    localStorage.setItem('adminBlogs', JSON.stringify(updatedBlogs));
+    setEditingBlog(null);
+    setBlogForm({ title: '', content: '', coverImage: '' });
+  };
+  
+  const handleDeleteBlog = (id) => {
+    if (window.confirm("Delete this blog post?")) {
+      const updated = blogs.filter(b => b.id !== id);
+      setBlogs(updated);
+      localStorage.setItem('adminBlogs', JSON.stringify(updated));
+    }
+  };
+
   const renderContent = () => {
     if (!currentAdmin) return null;
 
@@ -242,7 +300,7 @@ export default function AdminDashboard() {
 
           {editingLead && (
             <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-              <div className="bg-[#111827] border border-gray-800 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative">
+              <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative">
                 <h2 className="text-xl font-bold text-white mb-6">Edit Lead</h2>
                 <div className="space-y-4">
                   <div>
@@ -251,7 +309,7 @@ export default function AdminDashboard() {
                       type="text" 
                       value={editingLead.name || ''} 
                       onChange={e => handleEditChange('name', e.target.value)}
-                      className="w-full bg-[#1F2937] border border-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500"
+                      className="w-full bg-black/20 border border-white/10 backdrop-blur-sm text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500"
                     />
                   </div>
                   <div>
@@ -260,7 +318,7 @@ export default function AdminDashboard() {
                       type="email" 
                       value={editingLead.email || ''} 
                       onChange={e => handleEditChange('email', e.target.value)}
-                      className="w-full bg-[#1F2937] border border-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500"
+                      className="w-full bg-black/20 border border-white/10 backdrop-blur-sm text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500"
                     />
                   </div>
                   <div>
@@ -269,7 +327,7 @@ export default function AdminDashboard() {
                       type="text" 
                       value={editingLead.phone || ''} 
                       onChange={e => handleEditChange('phone', e.target.value)}
-                      className="w-full bg-[#1F2937] border border-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500"
+                      className="w-full bg-black/20 border border-white/10 backdrop-blur-sm text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500"
                     />
                   </div>
                   <div>
@@ -278,7 +336,7 @@ export default function AdminDashboard() {
                       type="text" 
                       value={editingLead.interest || ''} 
                       onChange={e => handleEditChange('interest', e.target.value)}
-                      className="w-full bg-[#1F2937] border border-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500"
+                      className="w-full bg-black/20 border border-white/10 backdrop-blur-sm text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500"
                     />
                   </div>
                   <div>
@@ -287,7 +345,7 @@ export default function AdminDashboard() {
                       value={editingLead.message || ''} 
                       onChange={e => handleEditChange('message', e.target.value)}
                       rows={3}
-                      className="w-full bg-[#1F2937] border border-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 resize-none"
+                      className="w-full bg-black/20 border border-white/10 backdrop-blur-sm text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 resize-none"
                     />
                   </div>
                 </div>
@@ -317,7 +375,7 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          <div className="bg-[#111827] border border-gray-800 rounded-xl p-6 shadow-lg">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[800px]">
                 <thead>
@@ -389,7 +447,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="bg-[#111827] border border-gray-800 rounded-xl p-6 shadow-lg">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[500px]">
                 <thead>
@@ -430,7 +488,7 @@ export default function AdminDashboard() {
           <h1 className="text-2xl font-bold text-white mb-6">Platform Settings</h1>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl">
             {/* General Settings */}
-            <div className="bg-[#111827] border border-gray-800 rounded-xl p-6 shadow-lg">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
               <h2 className="text-lg font-semibold text-white mb-4 border-b border-gray-800 pb-2">Admin Profile</h2>
               <form className="space-y-5">
                 <div>
@@ -449,7 +507,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* System Preferences */}
-            <div className="bg-[#111827] border border-gray-800 rounded-xl p-6 shadow-lg">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
               <h2 className="text-lg font-semibold text-white mb-4 border-b border-gray-800 pb-2">System Preferences</h2>
               <form className="space-y-5">
                 <div className="flex items-center justify-between">
@@ -502,7 +560,7 @@ export default function AdminDashboard() {
             </button>
           </div>
 
-          <div className="bg-[#111827] border border-gray-800 rounded-xl p-6 shadow-lg">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[700px]">
                 <thead>
@@ -549,20 +607,20 @@ export default function AdminDashboard() {
 
           {showAdminModal && (
             <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-              <div className="bg-[#111827] border border-gray-800 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative">
+              <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative">
                 <h2 className="text-xl font-bold text-white mb-6">{editingAdminId ? 'Edit Admin' : 'Create New Admin'}</h2>
                 <form onSubmit={handleSaveAdmin} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-400 mb-1">Name</label>
-                    <input type="text" required value={adminForm.name} onChange={e => setAdminForm({...adminForm, name: e.target.value})} className="w-full bg-[#1F2937] border border-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500" />
+                    <input type="text" required value={adminForm.name} onChange={e => setAdminForm({...adminForm, name: e.target.value})} className="w-full bg-black/20 border border-white/10 backdrop-blur-sm text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-400 mb-1">Email</label>
-                    <input type="email" required value={adminForm.email} onChange={e => setAdminForm({...adminForm, email: e.target.value})} className="w-full bg-[#1F2937] border border-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500" />
+                    <input type="email" required value={adminForm.email} onChange={e => setAdminForm({...adminForm, email: e.target.value})} className="w-full bg-black/20 border border-white/10 backdrop-blur-sm text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-400 mb-1">{editingAdminId ? 'New Password (leave blank to keep current)' : 'Password'}</label>
-                    <input type="password" required={!editingAdminId} value={adminForm.password} onChange={e => setAdminForm({...adminForm, password: e.target.value})} className="w-full bg-[#1F2937] border border-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500" />
+                    <input type="password" required={!editingAdminId} value={adminForm.password} onChange={e => setAdminForm({...adminForm, password: e.target.value})} className="w-full bg-black/20 border border-white/10 backdrop-blur-sm text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500" />
                   </div>
                   <div className="pt-4 border-t border-gray-800">
                     <label className="block text-sm font-medium text-gray-300 mb-3">Permissions</label>
@@ -599,7 +657,7 @@ export default function AdminDashboard() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
           {/* Stats Cards */}
-          <div className="bg-[#111827] border border-gray-800 rounded-xl p-6 shadow-lg">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
             <div className="flex justify-between items-start">
               <div>
                 <div className="text-gray-400 text-sm font-medium mb-1">Total Leads (This Month)</div>
@@ -614,7 +672,7 @@ export default function AdminDashboard() {
                   <Users className="w-5 h-5 text-cyan-400" />
                 </div>
                 {showLeadsList && (
-                  <div className="absolute right-0 mt-2 w-56 bg-[#1F2937] border border-gray-700 rounded-lg shadow-xl z-50 py-2 max-h-60 overflow-y-auto">
+                  <div className="absolute right-0 mt-2 w-56 bg-black/20 border border-white/10 backdrop-blur-sm rounded-lg shadow-xl z-50 py-2 max-h-60 overflow-y-auto">
                     <div className="px-4 py-2 border-b border-gray-700 text-xs font-semibold text-gray-400 uppercase tracking-wider">
                       Recent Leads
                     </div>
@@ -639,7 +697,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="bg-[#111827] border border-gray-800 rounded-xl p-6 shadow-lg">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
             <div className="flex justify-between items-start">
               <div>
                 <div className="text-gray-400 text-sm font-medium mb-1">Unread Messages</div>
@@ -654,7 +712,7 @@ export default function AdminDashboard() {
                   <Mail className="w-5 h-5 text-purple-400" />
                 </div>
                 {showEmailsList && (
-                  <div className="absolute right-0 mt-2 w-64 bg-[#1F2937] border border-gray-700 rounded-lg shadow-xl z-50 py-2 max-h-60 overflow-y-auto">
+                  <div className="absolute right-0 mt-2 w-64 bg-black/20 border border-white/10 backdrop-blur-sm rounded-lg shadow-xl z-50 py-2 max-h-60 overflow-y-auto">
                     <div className="px-4 py-2 border-b border-gray-700 text-xs font-semibold text-gray-400 uppercase tracking-wider">
                       Recent Emails
                     </div>
@@ -678,7 +736,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="bg-[#111827] border border-gray-800 rounded-xl p-6 shadow-lg">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
             <div className="flex justify-between items-start">
               <div>
                 <div className="text-gray-400 text-sm font-medium mb-1">Conversion Rate</div>
@@ -695,7 +753,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="bg-[#111827] border border-gray-800 rounded-xl p-6 shadow-lg">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
             <div className="flex justify-between items-start">
               <div>
                 <div className="text-gray-400 text-sm font-medium mb-1">New Leads</div>
@@ -713,8 +771,72 @@ export default function AdminDashboard() {
           </div>
         </div>
 
+        {/* Analytics Charts */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
+            <h3 className="text-lg font-bold text-white mb-4">Leads by Status</h3>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={[
+                    { name: 'New', count: leads.filter(l => l.status === 'New').length },
+                    { name: 'Connected', count: leads.filter(l => l.status === 'Connected').length },
+                    { name: 'In Progress', count: leads.filter(l => l.status === 'In Progress').length },
+                    { name: 'Won', count: leads.filter(l => l.status === 'Closed (Won)').length },
+                    { name: 'Lost', count: leads.filter(l => l.status === 'Closed (Lost)').length },
+                  ]}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                  <XAxis dataKey="name" stroke="#9CA3AF" />
+                  <YAxis stroke="#9CA3AF" />
+                  <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: 'none', borderRadius: '8px', color: '#fff' }} />
+                  <Bar dataKey="count" fill="#06b6d4" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
+            <h3 className="text-lg font-bold text-white mb-4">Lead Interests</h3>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={[
+                      { name: 'White-Label MT5', value: leads.filter(l => l.interest === 'White-Label MT5').length },
+                      { name: 'Liquidity Provider', value: leads.filter(l => l.interest === 'Liquidity Provider').length },
+                      { name: 'CRM Software', value: leads.filter(l => l.interest === 'CRM Software').length },
+                      { name: 'Risk Management', value: leads.filter(l => l.interest === 'Risk Management').length },
+                      { name: 'Business Consulting', value: leads.filter(l => l.interest === 'Business Consulting').length },
+                    ].filter(d => d.value > 0)}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={100}
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {[
+                      { name: 'White-Label MT5', value: leads.filter(l => l.interest === 'White-Label MT5').length },
+                      { name: 'Liquidity Provider', value: leads.filter(l => l.interest === 'Liquidity Provider').length },
+                      { name: 'CRM Software', value: leads.filter(l => l.interest === 'CRM Software').length },
+                      { name: 'Risk Management', value: leads.filter(l => l.interest === 'Risk Management').length },
+                      { name: 'Business Consulting', value: leads.filter(l => l.interest === 'Business Consulting').length },
+                    ].filter(d => d.value > 0).map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={['#06b6d4', '#a855f7', '#3b82f6', '#10b981', '#f59e0b'][index % 5]} />
+                    ))}
+                  </Pie>
+                  <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: 'none', borderRadius: '8px', color: '#fff' }} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-[#111827] border border-gray-800 rounded-xl p-6 shadow-lg">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
             <h3 className="text-lg font-bold text-white mb-4">Recent Contact Requests</h3>
             <div className="space-y-4">
               {leads.slice(0, 3).map((lead) => (
@@ -740,7 +862,7 @@ export default function AdminDashboard() {
             </button>
           </div>
 
-          <div className="bg-[#111827] border border-gray-800 rounded-xl p-6 shadow-lg">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
             <h3 className="text-lg font-bold text-white mb-4">Quick Actions</h3>
             <div className="grid grid-cols-2 gap-4">
               <button onClick={handleEmailBroadcast} className="flex flex-col items-center justify-center p-6 bg-gray-800/30 border border-gray-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 rounded-xl transition-all group">
@@ -761,14 +883,93 @@ export default function AdminDashboard() {
       </motion.div>
     );
     }
+
+    if (activeTab === 'blogs') {
+      return (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-bold text-white">Manage Blogs</h1>
+            <button onClick={() => { setEditingBlog(false); setBlogForm({ title: '', content: '', coverImage: '' }); }} className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-sm font-medium transition-colors">
+              + Create New Blog
+            </button>
+          </div>
+
+          {editingBlog !== null && (
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg mb-8">
+              <h2 className="text-xl font-bold text-white mb-6">{editingBlog ? 'Edit Blog' : 'Create New Blog'}</h2>
+              <form onSubmit={handleSaveBlog} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-400 mb-1">Title</label>
+                  <input type="text" required value={blogForm.title} onChange={e => setBlogForm({...blogForm, title: e.target.value})} className="w-full bg-black/20 border border-white/10 backdrop-blur-sm text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-400 mb-1">Cover Image</label>
+                  <input type="file" accept="image/*" onChange={handleUploadImage} className="w-full bg-black/20 border border-white/10 backdrop-blur-sm text-white rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500" />
+                  {blogForm.coverImage && <img src={blogForm.coverImage} alt="Cover" className="mt-2 h-32 object-cover rounded-lg" />}
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-400 mb-1">Content (Rich Text)</label>
+                  <div className="bg-white rounded-lg text-black mb-12">
+                    <ReactQuill 
+                      theme="snow" 
+                      value={blogForm.content} 
+                      onChange={(content) => setBlogForm({...blogForm, content})} 
+                      style={{ height: '300px' }}
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-end gap-3 mt-8">
+                  <button type="button" onClick={() => setEditingBlog(null)} className="px-6 py-2 border border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg font-medium transition-colors">Cancel</button>
+                  <button type="submit" className="px-6 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-medium transition-colors">Save Blog</button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-lg">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse min-w-[500px]">
+                <thead>
+                  <tr className="border-b border-gray-800">
+                    <th className="py-3 px-4 text-gray-400 font-medium">Title</th>
+                    <th className="py-3 px-4 text-gray-400 font-medium text-right">Date</th>
+                    <th className="py-3 px-4 text-gray-400 font-medium text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {blogs.length > 0 ? blogs.map((blog) => (
+                    <tr key={blog.id} className="border-b border-gray-800/50 hover:bg-gray-800/30 transition-colors">
+                      <td className="py-4 px-4 text-white font-medium">{blog.title}</td>
+                      <td className="py-4 px-4 text-gray-500 text-right">{blog.date}</td>
+                      <td className="py-4 px-4 text-right">
+                        <button onClick={() => { setEditingBlog(blog); setBlogForm(blog); }} className="text-cyan-500 hover:text-cyan-400 text-sm font-medium px-3 py-1.5 border border-cyan-500/30 hover:border-cyan-400 rounded-lg transition-colors mr-2">Edit</button>
+                        <button onClick={() => handleDeleteBlog(blog.id)} className="text-red-500 hover:text-red-400 text-sm font-medium px-3 py-1.5 border border-red-500/30 hover:border-red-400 rounded-lg transition-colors">Delete</button>
+                      </td>
+                    </tr>
+                  )) : (
+                    <tr><td colSpan="3" className="py-8 text-center text-gray-500">No blogs created yet.</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </motion.div>
+      );
+    }
     
     return <div className="p-8 text-center text-gray-500">Please select an option from the menu.</div>;
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] flex">
+    <div className="relative min-h-screen flex overflow-hidden bg-[#030610]">
+      <Admin3DBackground />
+      <div className="relative z-10 flex w-full">
       {/* Sidebar */}
-      <div className="w-64 bg-[#111827] border-r border-gray-800 flex flex-col hidden md:flex">
+      <div className="w-64 bg-white/5 backdrop-blur-xl border-r border-white/10 flex flex-col hidden md:flex">
         <div className="p-6 border-b border-gray-800">
           <h2 
             onClick={() => { setActiveTab('dashboard'); navigate('/admin/dashboard'); }}
@@ -834,6 +1035,18 @@ export default function AdminDashboard() {
             </button>
           )}
 
+          <button
+            onClick={() => setActiveTab('blogs')}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+              activeTab === 'blogs'
+                ? 'bg-cyan-500/10 text-cyan-400'
+                : 'text-gray-400 hover:text-white hover:bg-gray-800'
+            }`}
+          >
+            <FileText className="w-5 h-5" />
+            <span className="font-medium">Blogs</span>
+          </button>
+
           {currentAdmin?.permissions?.manage_admins && (
             <button
               onClick={() => setActiveTab('manage_admins')}
@@ -862,7 +1075,7 @@ export default function AdminDashboard() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-screen">
         {/* Mobile Header */}
-        <div className="md:hidden bg-[#111827] border-b border-gray-800 p-4 flex justify-between items-center z-20">
+        <div className="md:hidden bg-white/5 backdrop-blur-xl border-b border-white/10 p-4 flex justify-between items-center z-20">
           <h2 
             onClick={() => { setActiveTab('dashboard'); navigate('/admin/dashboard'); }}
             className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 cursor-pointer hover:opacity-80 transition-opacity"
@@ -879,7 +1092,7 @@ export default function AdminDashboard() {
         </main>
 
         {/* Mobile Bottom Navigation */}
-        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#111827] border-t border-gray-800 z-50 px-2 py-3 flex justify-around items-center">
+        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/5 backdrop-blur-xl border-t border-white/10 z-50 px-2 py-3 flex justify-around items-center">
           {currentAdmin?.permissions?.dashboard && (
             <button
               onClick={() => setActiveTab('dashboard')}
@@ -926,6 +1139,7 @@ export default function AdminDashboard() {
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 }

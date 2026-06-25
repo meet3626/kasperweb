@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Monitor, Users, LineChart, Shield, Server, Briefcase, ArrowUpRight } from 'lucide-react';
+import Service3DElement from './Service3DElement';
 
 const servicesData = [
-  { icon: LineChart, title: 'Multi-Asset Liquidity', desc: 'Connect your brokerage to deep Tier-1 liquidity pools offering 80+ FX pairs, Commodities, and Crypto CFDs with aggregated feeds and tight institutional spreads.', span: 'lg:col-span-2 md:col-span-2', bgStyle: 'bg-gradient-to-br from-black/5 to-transparent dark:from-white/5 dark:to-transparent border-black/10 dark:border-white/10 hover:border-accent-cyan/40' },
-  { icon: Monitor, title: 'White-Label MT5 Platform', desc: 'Deploy a fully branded MT5 trading environment complete with advanced admin controls.', span: 'lg:col-span-1 md:col-span-1', bgStyle: 'bg-gradient-to-br from-accent-cyan/10 to-transparent border-accent-cyan/20 hover:border-accent-cyan/50' },
-  { icon: Users, title: 'Branded CRM & Portal', desc: 'Streamline back-office operations with an intelligent portal featuring automated KYC/AML onboarding.', span: 'lg:col-span-1 md:col-span-1', bgStyle: 'bg-white/50 dark:bg-white/5 backdrop-blur-md border border-black/10 dark:border-white/10 hover:border-accent-purple/50' },
-  { icon: Server, title: 'Ultra-Low Latency VPS', desc: 'Provide your traders with sub-millisecond execution speeds via our globally distributed, co-located servers.', span: 'lg:col-span-2 md:col-span-2', bgStyle: 'bg-gradient-to-bl from-black/5 to-transparent dark:from-white/5 dark:to-transparent border-black/10 dark:border-white/10 hover:border-accent-blue/40' },
-  { icon: Shield, title: 'Risk Management', desc: 'Safeguard your brokerage with sophisticated bridging and real-time exposure monitoring to mitigate toxic flow.', span: 'lg:col-span-1.5 md:col-span-1', bgStyle: 'bg-white dark:bg-[#111621] border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20' },
-  { icon: Briefcase, title: 'Islamic Compliance Setup', desc: 'Expand your regional market share by easily configuring swap-free, Sharia-compliant trading accounts for your clients without complex administrative overhead.', span: 'lg:col-span-2 md:col-span-2', bgStyle: 'bg-gradient-to-t from-accent-purple/10 to-transparent border-accent-purple/20 hover:border-accent-purple/50' },
+  { type: 'liquidity', icon: LineChart, title: 'Multi-Asset Liquidity', desc: 'Connect your brokerage to deep Tier-1 liquidity pools offering 80+ FX pairs, Commodities, and Crypto CFDs with aggregated feeds and tight institutional spreads.', span: 'lg:col-span-2 md:col-span-2', bgStyle: 'bg-gradient-to-br from-black/5 to-transparent dark:from-white/5 dark:to-transparent border-black/10 dark:border-white/10 hover:border-accent-cyan/40' },
+  { type: 'platform', icon: Monitor, title: 'White-Label MT5 Platform', desc: 'Deploy a fully branded MT5 trading environment complete with advanced admin controls.', span: 'lg:col-span-1 md:col-span-1', bgStyle: 'bg-gradient-to-br from-accent-cyan/10 to-transparent border-accent-cyan/20 hover:border-accent-cyan/50' },
+  { type: 'crm', icon: Users, title: 'Branded CRM & Portal', desc: 'Streamline back-office operations with an intelligent portal featuring automated KYC/AML onboarding.', span: 'lg:col-span-1 md:col-span-1', bgStyle: 'bg-white/50 dark:bg-white/5 backdrop-blur-md border border-black/10 dark:border-white/10 hover:border-accent-purple/50' },
+  { type: 'vps', icon: Server, title: 'Ultra-Low Latency VPS', desc: 'Provide your traders with sub-millisecond execution speeds via our globally distributed, co-located servers.', span: 'lg:col-span-2 md:col-span-2', bgStyle: 'bg-gradient-to-bl from-black/5 to-transparent dark:from-white/5 dark:to-transparent border-black/10 dark:border-white/10 hover:border-accent-blue/40' },
+  { type: 'risk', icon: Shield, title: 'Risk Management', desc: 'Safeguard your brokerage with sophisticated bridging and real-time exposure monitoring to mitigate toxic flow.', span: 'lg:col-span-1.5 md:col-span-1', bgStyle: 'bg-white dark:bg-[#111621] border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20' },
+  { type: 'compliance', icon: Briefcase, title: 'Islamic Compliance Setup', desc: 'Expand your regional market share by easily configuring swap-free, Sharia-compliant trading accounts for your clients without complex administrative overhead.', span: 'lg:col-span-2 md:col-span-2', bgStyle: 'bg-gradient-to-t from-accent-purple/10 to-transparent border-accent-purple/20 hover:border-accent-purple/50' },
 ];
 
 const containerVariants = {
@@ -30,8 +31,10 @@ const itemVariants = {
 };
 
 const Services = () => {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
   return (
-    <section id="services" className="py-24 bg-gray-50 dark:bg-[#09090b] transition-colors duration-500 relative overflow-hidden">
+    <section id="services" className="py-24 transition-colors duration-500 relative overflow-hidden">
       {/* Background Glow */}
       <div className="absolute top-[20%] left-[-10%] w-[800px] h-[800px] bg-accent-cyan/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
       <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent-purple/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
@@ -87,10 +90,15 @@ const Services = () => {
               <motion.div
                 key={index}
                 variants={itemVariants}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
                 className={`group p-8 md:p-10 rounded-3xl border transition-all duration-500 relative overflow-hidden flex flex-col justify-between ${spanClass} ${service.bgStyle}`}
               >
+                {/* 3D Background Element */}
+                <Service3DElement type={service.type} isHovered={hoveredIndex === index} />
+
                 {/* Hover gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/5 dark:from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/5 dark:from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"></div>
                 
                 <div className="flex justify-between items-start mb-12 relative z-10">
                   <div className="w-14 h-14 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-gray-900 dark:text-white backdrop-blur-md group-hover:scale-110 group-hover:bg-black/10 dark:group-hover:bg-white/10 transition-all duration-500">

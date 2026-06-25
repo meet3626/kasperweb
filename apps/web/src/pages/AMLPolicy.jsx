@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 
 const AMLPolicy = () => {
   return (
-    <div className="pt-32 pb-24 bg-[#080B10] min-h-screen">
+    <div className="pt-32 pb-24 min-h-screen">
       <Helmet>
         <title>AML & Compliance Policy | KAPSERFX IT SOLUTIONS EST</title>
       </Helmet>

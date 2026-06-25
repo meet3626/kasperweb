@@ -28,9 +28,8 @@ const ProfitEstimator = () => {
   const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
 
   return (
-    <section className="py-24 relative overflow-hidden bg-[#0B0B0B]">
+    <section className="py-24 relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0c12] via-[#0B0B0B] to-[#0B0B0B]" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-accent-cyan/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-6 max-w-6xl relative z-10">

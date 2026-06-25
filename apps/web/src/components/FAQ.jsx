@@ -30,7 +30,7 @@ const FAQ = () => {
 
   return (
     <section id="faq" className="py-28 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0B0B0B] via-[#0c0e15] to-[#0B0B0B]" />
+      
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-accent-purple/[0.05] rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 

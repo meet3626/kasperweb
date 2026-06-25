@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import Hero from '@/components/Hero';
 import Services from '@/components/Services';
 import Features from '@/components/Features';
@@ -16,7 +15,7 @@ import AboutKAPSERFX from '@/components/AboutKAPSERFX';
 
 const Home = () => {
   return (
-    <div className="bg-[#0B0B0B] min-h-screen text-white font-sans">
+    <div className="w-full">
       <SEOHead 
         title="KAPSERFX | Turnkey Forex Broker Solutions"
         description="Launch your Forex brokerage in days. We offer MT5/cTrader platforms, CRM, liquidity integration, and digital marketing strategies."

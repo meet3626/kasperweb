@@ -11,6 +11,8 @@ const authRoutes = require('./routes/authRoutes');
 const mfaRoutes = require('./routes/mfaRoutes');
 const blogRoutes = require('./routes/blogRoutes');
 const leadRoutes = require('./routes/leadRoutes');
+const analyticsRoutes = require('./routes/analyticsRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
 
 // Load env vars
 dotenv.config();
@@ -53,6 +55,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/mfa', mfaRoutes);
 app.use('/api/leads', leadRoutes);
 app.use('/api/blogs', blogRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {

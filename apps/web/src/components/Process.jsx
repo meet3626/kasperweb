@@ -24,7 +24,7 @@ const Process = () => {
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section id="process" className="py-24 bg-gray-50 dark:bg-[#09090b] transition-colors duration-500 relative overflow-hidden" ref={containerRef}>
+    <section id="process" className="py-24 transition-colors duration-500 relative overflow-hidden" ref={containerRef}>
       {/* Dynamic Backgrounds */}
       <div className="absolute top-[10%] right-[0%] w-[800px] h-[800px] bg-accent-blue/5 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-[10%] left-[0%] w-[800px] h-[800px] bg-accent-cyan/5 rounded-full blur-[150px] pointer-events-none" />

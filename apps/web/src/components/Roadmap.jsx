@@ -19,7 +19,7 @@ const steps = [
 const Roadmap = () => {
   return (
     <section id="roadmap" className="py-28 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0B0B0B] via-[#0e101a] to-[#0B0B0B]" />
+      
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-cyan/[0.04] rounded-full blur-[120px] pointer-events-none" />
       <div className="container mx-auto px-6 relative z-10">

@@ -30,7 +30,7 @@ const TrustedClients = () => {
   };
 
   return (
-    <section className="py-20 bg-[#0B0B0B] border-t border-b border-[#1E1E2A] overflow-hidden">
+    <section className="py-20 border-t border-b border-[#1E1E2A] overflow-hidden">
       <div className="container mx-auto px-6 text-center">
         <p className="text-lg text-gray-400 mb-12 uppercase">Trusted by 150+ Companies Worldwide</p>
         <div className="relative w-full">

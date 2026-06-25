@@ -3,12 +3,9 @@ import { motion } from 'framer-motion';
 
 const AboutKAPSERFX = () => {
   return (
-    <section className="py-32 relative overflow-hidden bg-[#0B0B0B]">
-      {/* Background gradients */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0c12] to-[#0B0B0B] z-0" />
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent-cyan/[0.03] rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent-purple/[0.03] rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <section className="py-32 relative overflow-hidden">
+      {/* Animated subtle grid background */}
+      <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] z-0 pointer-events-none" />
 
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">

@@ -68,7 +68,7 @@ const Contact = () => {
   };
 
   return (
-    <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ type: 'tween', ease: 'anticipate', duration: 0.5 }} className="bg-[#050505] min-h-screen pt-32 pb-24 relative overflow-hidden">
+    <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={{ type: 'tween', ease: 'anticipate', duration: 0.5 }} className="min-h-screen pt-32 pb-24 relative overflow-hidden">
       <Helmet>
         <title>Contact Sales | KAPSERFX IT SOLUTIONS</title>
       </Helmet>

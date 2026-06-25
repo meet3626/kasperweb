@@ -16,15 +16,20 @@ const BlogPost = () => {
     window.scrollTo(0, 0);
     const fetchPost = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/blogs/${slug}`);
-        const data = await response.json();
-        if (data.success) {
-          setPost(data.data);
+        const saved = localStorage.getItem('adminBlogs');
+        if (saved) {
+          const blogs = JSON.parse(saved);
+          const found = blogs.find(b => b.slug === slug);
+          if (found) {
+            setPost(found);
+          } else {
+            setError('Post Not Found');
+          }
         } else {
-          setError('Failed to fetch blog post');
+          setError('Post Not Found');
         }
       } catch (err) {
-        setError('Server error while fetching blog post');
+        setError('Error loading blog post');
       } finally {
         setLoading(false);
       }
@@ -34,7 +39,7 @@ const BlogPost = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#080B10] text-gray-900 dark:text-white flex flex-col items-center justify-center transition-colors duration-500">
+      <div className="min-h-screen text-white flex flex-col items-center justify-center pt-24 pb-12">
         <h1 className="text-4xl font-bold mb-4">Loading Post...</h1>
       </div>
     );
@@ -42,7 +47,7 @@ const BlogPost = () => {
 
   if (error || !post) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#080B10] text-gray-900 dark:text-white flex flex-col items-center justify-center transition-colors duration-500">
+      <div className="min-h-screen text-white flex flex-col items-center justify-center pt-24 pb-12">
         <h1 className="text-4xl font-bold mb-4">{error || 'Post Not Found'}</h1>
         <button onClick={() => navigate('/blog')} className="text-accent-cyan hover:underline flex items-center gap-2">
           <ArrowLeft size={16} /> Back to Blog
@@ -52,7 +57,7 @@ const BlogPost = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#080B10] text-gray-900 dark:text-white pt-24 pb-16 font-sans transition-colors duration-500">
+    <div className="min-h-screen text-white pt-24 pb-16 font-sans">
       <Helmet>
         <title>{post.title} | KAPSERFX IT SOLUTIONS EST</title>
       </Helmet>
@@ -114,7 +119,7 @@ const BlogPost = () => {
                   <p className="font-bold text-lg text-gray-900 dark:text-white">{post.author.name}</p>
                 </div>
               </div>
-              <button className="px-6 py-2 border border-black/20 dark:border-white/20 rounded-full hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors font-bold uppercase tracking-widest text-sm text-gray-900 dark:text-white">
+              <button className="px-6 py-2 border border-white/20 rounded-full hover:bg-white hover:text-black transition-colors font-bold uppercase tracking-widest text-sm text-white">
                 Share Article
               </button>
             </div>

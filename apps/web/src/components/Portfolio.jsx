@@ -26,7 +26,7 @@ const Portfolio = () => {
   const handleProjectClick = slug => {
     navigate(`/project/${slug}`);
   };
-  return <section id="portfolio" className="py-32 bg-[#0B0B0B]">
+  return <section id="portfolio" className="py-32">
       <div className="container mx-auto px-6">
         <div className="flex flex-wrap justify-between items-end gap-8 mb-20">
           <div className="w-full lg:w-1/2">
@@ -47,7 +47,7 @@ const Portfolio = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="group relative aspect-[4/3] rounded-3xl overflow-hidden cursor-pointer border border-[#ffffff15] bg-[#121212]" onClick={() => handleProjectClick('social-media-app')}>
-            <img class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 ease-out" alt="A dark-themed social media application interface shown on a smartphone" src="https://horizons-cdn.hostinger.com/e244d3b2-f8c1-4974-9afc-b7949c8a31be/tech-daily-lkyv7faumza-unsplash-2-FOBCl.jpg" />
+            <img class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 ease-out" alt="A dark-themed social media application interface shown on a smartphone" src="/images/dark_social_trading.png" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0B] via-[#0B0B0B]/40 to-transparent"></div>
             
             <div className="absolute inset-4 top-auto rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 p-6 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
@@ -63,7 +63,7 @@ const Portfolio = () => {
           </div>
 
           <div className="group relative aspect-[4/3] rounded-3xl overflow-hidden cursor-pointer border border-[#ffffff15] bg-[#121212]" onClick={() => handleProjectClick('fintech-dashboard')}>
-            <img class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 ease-out" alt="A fintech application dashboard with payment details, displayed on a smartphone next to a keyboard" src="https://horizons-cdn.hostinger.com/e244d3b2-f8c1-4974-9afc-b7949c8a31be/gemini_generated_image_n6u5epn6u5epn6u5-5abrf-2-W2Hon.jpg" />
+            <img class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 ease-out" alt="A fintech application dashboard with payment details, displayed on a smartphone next to a keyboard" src="/images/fintech_dashboard.png" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0B] via-[#0B0B0B]/40 to-transparent"></div>
             
             <div className="absolute inset-4 top-auto rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 p-6 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
@@ -79,7 +79,7 @@ const Portfolio = () => {
           </div>
 
           <div className="group relative aspect-[4/3] rounded-3xl overflow-hidden cursor-pointer border border-[#ffffff15] bg-[#121212]" onClick={() => handleProjectClick('digital-marketing-agency-site')}>
-            <img class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 ease-out" alt="A digital marketing agency website homepage, shown on a smartphone with a sleek, modern design" src="https://horizons-cdn.hostinger.com/e244d3b2-f8c1-4974-9afc-b7949c8a31be/sumup-vsyr_mbh7q4-unsplash-2-Hxitr.jpg" />
+            <img class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 ease-out" alt="A digital marketing agency website homepage, shown on a smartphone with a sleek, modern design" src="/images/analytics_dashboard.png" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0B] via-[#0B0B0B]/40 to-transparent"></div>
             
             <div className="absolute inset-4 top-auto rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 p-6 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">

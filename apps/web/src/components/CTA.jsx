@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import AnimatedCtaBackground from '@/components/AnimatedCtaBackground';
 import { useNavigate } from 'react-router-dom';
 
 const CTA = () => {
@@ -14,9 +13,6 @@ const CTA = () => {
 
   return (
     <section id="cta" className="relative py-32 overflow-hidden">
-      <AnimatedCtaBackground />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
-
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <motion.p

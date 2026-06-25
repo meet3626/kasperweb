@@ -13,11 +13,11 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 
 // ─── Language Data ─────────────────────────────────────────────────────────────
 const LANGUAGES = [
-  { code: 'EN', label: 'English',  flag: '🇬🇧', dir: 'ltr' },
-  { code: 'AR', label: 'العربية',   flag: '🇦🇪', dir: 'ltr' },
-  { code: 'ES', label: 'Español',  flag: '🇪🇸', dir: 'ltr' },
+  { code: 'EN', label: 'English', flag: '🇬🇧', dir: 'ltr' },
+  { code: 'AR', label: 'العربية', flag: '🇦🇪', dir: 'ltr' },
+  { code: 'ES', label: 'Español', flag: '🇪🇸', dir: 'ltr' },
   { code: 'FR', label: 'Français', flag: '🇫🇷', dir: 'ltr' },
-  { code: 'ZH', label: '中文',      flag: '🇨🇳', dir: 'ltr' },
+  { code: 'ZH', label: '中文', flag: '🇨🇳', dir: 'ltr' },
 ];
 
 // ─── Mega-Menu Data ────────────────────────────────────────────────────────────
@@ -27,11 +27,11 @@ const MEGA_MENU = [
     accent: 'from-accent-cyan/20 to-transparent',
     dot: 'bg-accent-cyan',
     items: [
-      { icon: Briefcase,    label: 'Business Consulting',    desc: 'End-to-end brokerage strategy & advisory',      href: '/services/business-consulting'      },
-      { icon: FileCheck,    label: 'Licensing & Regulations', desc: 'Multi-jurisdiction regulatory frameworks',      href: '/services/licensing-regulations'    },
-      { icon: Server,       label: 'Hosting Server Support',  desc: 'Ultra-low latency co-location infrastructure', href: '/services/hosting-server-support'   },
-      { icon: Zap,          label: 'Liquidity Provider',      desc: 'Tier-1 deep order-book connections',           href: '/services/liquidity-provider'       },
-      { icon: CreditCard,   label: 'Gateway Solutions',       desc: 'Multi-currency payment processing',            href: '/services/gateway-solutions'        },
+      { icon: Briefcase, label: 'Business Consulting', desc: 'End-to-end brokerage strategy & advisory', href: '/services/business-consulting' },
+      { icon: FileCheck, label: 'Licensing & Regulations', desc: 'Multi-jurisdiction regulatory frameworks', href: '/services/licensing-regulations' },
+      { icon: Server, label: 'Hosting Server Support', desc: 'Ultra-low latency co-location infrastructure', href: '/services/hosting-server-support' },
+      { icon: Zap, label: 'Liquidity Provider', desc: 'Tier-1 deep order-book connections', href: '/services/liquidity-provider' },
+      { icon: CreditCard, label: 'Gateway Solutions', desc: 'Multi-currency payment processing', href: '/services/gateway-solutions' },
     ],
   },
   {
@@ -39,10 +39,10 @@ const MEGA_MENU = [
     accent: 'from-accent-purple/20 to-transparent',
     dot: 'bg-accent-purple',
     items: [
-      { icon: LayoutDashboard, label: 'CRM Software',            desc: 'Intelligent client lifecycle management',     href: '/services/crm-software'               },
-      { icon: ShieldAlert,     label: 'Risk Management Software', desc: 'Real-time exposure & drawdown control',      href: '/services/risk-management-software'   },
-      { icon: Monitor,         label: 'Trading Platforms',        desc: 'MT5, cTrader & custom white-label builds',   href: '/services/trading-platforms'          },
-      { icon: PuzzleIcon,      label: 'Plugin Solutions',         desc: 'Proprietary performance-enhancing plugins',  href: '/services/plugin-solutions'           },
+      { icon: LayoutDashboard, label: 'CRM Software', desc: 'Intelligent client lifecycle management', href: '/services/crm-software' },
+      { icon: ShieldAlert, label: 'Risk Management Software', desc: 'Real-time exposure & drawdown control', href: '/services/risk-management-software' },
+      { icon: Monitor, label: 'Trading Platforms', desc: 'MT5, cTrader & custom white-label builds', href: '/services/trading-platforms' },
+      { icon: PuzzleIcon, label: 'Plugin Solutions', desc: 'Proprietary performance-enhancing plugins', href: '/services/plugin-solutions' },
     ],
   },
   {
@@ -50,8 +50,8 @@ const MEGA_MENU = [
     accent: 'from-emerald-500/20 to-transparent',
     dot: 'bg-emerald-400',
     items: [
-      { icon: TrendingUp,    label: 'Digital Growth Solutions', desc: 'Data-driven acquisition & retention funnels', href: '/services/digital-growth-solutions' },
-      { icon: GraduationCap, label: 'Technical Training',       desc: 'Platform, compliance & operations training',  href: '/services/technical-training'      },
+      { icon: TrendingUp, label: 'Digital Growth Solutions', desc: 'Data-driven acquisition & retention funnels', href: '/services/digital-growth-solutions' },
+      { icon: GraduationCap, label: 'Technical Training', desc: 'Platform, compliance & operations training', href: '/services/technical-training' },
     ],
   },
 ];
@@ -75,6 +75,15 @@ const LanguageSelector = ({ mobile = false }) => {
     document.documentElement.dir = lang.dir;
     document.documentElement.lang = lang.code.toLowerCase();
     i18n.changeLanguage(lang.code.toLowerCase());
+    
+    // Programmatically trigger Google Translate
+    const selectElement = document.querySelector('.goog-te-combo');
+    if (selectElement) {
+      let targetCode = lang.code.toLowerCase();
+      if (lang.code === 'ZH') targetCode = 'zh-CN';
+      selectElement.value = targetCode;
+      selectElement.dispatchEvent(new Event('change'));
+    }
   };
 
   if (mobile) {
@@ -86,11 +95,10 @@ const LanguageSelector = ({ mobile = false }) => {
             <button
               key={lang.code}
               onClick={() => handleSelect(lang)}
-              className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 ${
-                active.code === lang.code
-                  ? 'bg-accent-cyan/20 border border-accent-cyan/50'
-                  : 'bg-white/5 border border-white/10 hover:bg-white/10'
-              }`}
+              className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 ${active.code === lang.code
+                ? 'bg-accent-cyan/20 border border-accent-cyan/50'
+                : 'bg-white/5 border border-white/10 hover:bg-white/10'
+                }`}
             >
               <span className="text-xl">{lang.flag}</span>
               <span className={`text-[10px] font-bold uppercase tracking-wider ${active.code === lang.code ? 'text-accent-cyan' : 'text-gray-400'}`}>
@@ -107,9 +115,8 @@ const LanguageSelector = ({ mobile = false }) => {
     <div ref={ref} className="relative">
       <button
         onClick={() => setIsOpen((v) => !v)}
-        className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border transition-all duration-300 text-sm font-semibold uppercase tracking-widest group ${
-          isOpen ? 'bg-accent-cyan/10 border-accent-cyan/40 text-accent-cyan' : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:border-white/20 hover:text-white'
-        }`}
+        className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border transition-all duration-300 text-sm font-semibold uppercase tracking-widest group ${isOpen ? 'bg-accent-cyan/10 border-accent-cyan/40 text-accent-cyan' : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:border-white/20 hover:text-white'
+          }`}
       >
         <Globe size={14} className={`transition-colors ${isOpen ? 'text-accent-cyan' : 'text-gray-400 group-hover:text-white'}`} />
         <span>{active.code}</span>
@@ -120,8 +127,8 @@ const LanguageSelector = ({ mobile = false }) => {
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: -8, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0,  scale: 1    }}
-            exit={{    opacity: 0, y: -8, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.97 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="absolute top-full right-0 mt-2 w-52 z-50 rounded-2xl border border-white/10 bg-neutral-950/80 backdrop-blur-xl shadow-2xl shadow-black/40 overflow-hidden"
           >
@@ -138,9 +145,8 @@ const LanguageSelector = ({ mobile = false }) => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.04 }}
                     onClick={() => handleSelect(lang)}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${
-                      isActive ? 'bg-accent-cyan/15 text-accent-cyan' : 'text-gray-300 hover:bg-white/5 hover:text-white'
-                    }`}
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${isActive ? 'bg-accent-cyan/15 text-accent-cyan' : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                      }`}
                   >
                     <span className="text-xl w-8 h-8 flex items-center justify-center rounded-full bg-white/5 border border-white/10 shrink-0">{lang.flag}</span>
                     <div className="flex-1 text-left">
@@ -166,8 +172,8 @@ const MegaMenu = ({ isOpen }) => (
     {isOpen && (
       <motion.div
         initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0  }}
-        exit={{    opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 12 }}
         transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
         className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[860px] z-50 rounded-2xl border border-white/[0.08] bg-[#0a0c12]/95 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.6)] overflow-hidden"
       >
@@ -305,93 +311,93 @@ const Header = () => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full z-50 flex justify-center pt-6 px-4 pointer-events-none">
+      <div className="fixed top-0 left-0 w-full z-50 pointer-events-none">
         <motion.header
-          className={`pointer-events-auto transition-all duration-500 ease-[0.22,1,0.36,1] rounded-full ${
-            isScrolled 
-              ? 'bg-[#09090b]/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.4)] w-full max-w-6xl px-6 py-3' 
-              : 'bg-transparent w-full max-w-7xl px-4 py-4'
-          }`}
+          className={`pointer-events-auto transition-all duration-500 ease-[0.22,1,0.36,1] w-full ${isScrolled
+            ? 'bg-[#09090b]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg py-3'
+            : 'bg-transparent py-5'
+            }`}
         >
-          <div className="flex justify-between items-center w-full">
-            
+          <div className="max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center w-full">
+
             {/* Logo */}
             <Link to="/" onClick={handleHomeClick} className="text-xl md:text-2xl font-[800] text-white tracking-widest flex items-center gap-2 shrink-0">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan to-white">KAPSERFX</span>
             </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-7">
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center gap-7">
 
-            <Link to="/" onClick={handleHomeClick} className="text-gray-300 hover:text-white transition-colors relative group font-semibold uppercase tracking-widest text-sm">
-              {t('nav.home')}
-              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full" />
-            </Link>
+              <Link to="/" onClick={handleHomeClick} className="text-gray-300 hover:text-white transition-colors relative group font-semibold uppercase tracking-widest text-sm">
+                {'HOME'}
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full" />
+              </Link>
 
-            {/* ── Services with Mega Menu ── */}
-            <div
-              className="relative"
-              onMouseEnter={handleMegaEnter}
-              onMouseLeave={handleMegaLeave}
-            >
-              <button
-                className={`flex items-center gap-1.5 text-sm font-semibold uppercase tracking-widest transition-colors duration-200 py-7 ${
-                  megaOpen ? 'text-accent-cyan' : 'text-gray-300 hover:text-white'
-                }`}
+              {/* ── Services with Mega Menu ── */}
+              <div
+                className="relative"
+                onMouseEnter={handleMegaEnter}
+                onMouseLeave={handleMegaLeave}
               >
-                {t('nav.services')}
-                <ChevronDown
-                  size={13}
-                  className={`transition-transform duration-300 ${megaOpen ? 'rotate-180 text-accent-cyan' : ''}`}
-                />
-              </button>
-              <MegaMenu isOpen={megaOpen} />
-            </div>
-
-            {/* Company Dropdown */}
-            <div className="relative group">
-              <button className="text-gray-300 hover:text-white transition-colors font-semibold uppercase tracking-widest text-sm flex items-center gap-1 py-7">
-                {t('nav.company')}
-                <ChevronDown size={13} className="transition-transform duration-300 group-hover:rotate-180" />
-              </button>
-              <div className="absolute top-full left-0 w-56 bg-neutral-950/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden">
-                <Link to="/about-us"             onClick={() => setIsOpen(false)} className="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors">{t('nav.about')}</Link>
-                <Link to="/contact"              onClick={() => setIsOpen(false)} className="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors">{t('nav.contact')}</Link>
-                <a href="/#faq"                  onClick={handleSmoothScroll} className="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors border-t border-white/5">{t('nav.faq')}</a>
+                <button
+                  className={`flex items-center gap-1.5 text-sm font-semibold uppercase tracking-widest transition-colors duration-200 py-7 ${megaOpen ? 'text-accent-cyan' : 'text-gray-300 hover:text-white'
+                    }`}
+                >
+                  {t('nav.services')}
+                  <ChevronDown
+                    size={13}
+                    className={`transition-transform duration-300 ${megaOpen ? 'rotate-180 text-accent-cyan' : ''}`}
+                  />
+                </button>
+                <MegaMenu isOpen={megaOpen} />
               </div>
+
+              {/* Company Dropdown */}
+              <div className="relative group">
+                <button className="text-gray-300 hover:text-white transition-colors font-semibold uppercase tracking-widest text-sm flex items-center gap-1 py-7">
+                  {t('nav.company')}
+                  <ChevronDown size={13} className="transition-transform duration-300 group-hover:rotate-180" />
+                </button>
+                <div className="absolute top-full left-0 w-56 bg-neutral-950/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden">
+                  <Link to="/about-us" onClick={() => setIsOpen(false)} className="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors">{t('nav.about')}</Link>
+                  <Link to="/contact" onClick={() => setIsOpen(false)} className="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors">{t('nav.contact')}</Link>
+                  <a href="/#faq" onClick={handleSmoothScroll} className="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors border-t border-white/5">{t('nav.faq')}</a>
+                </div>
+              </div>
+
+              <Link to="/blog" onClick={() => setIsOpen(false)} className="text-gray-300 hover:text-white transition-colors relative group font-semibold uppercase tracking-widest text-sm">
+                {t('nav.blog')}
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full" />
+              </Link>
+
+              <Link to="/brokerage-calculator" onClick={() => setIsOpen(false)} className="text-gray-300 hover:text-white transition-colors relative group font-semibold uppercase tracking-widest text-sm">
+                {t('nav.calculator')}
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full" />
+              </Link>
+            </nav>
+
+            {/* Desktop Right */}
+            <div className="hidden md:flex items-center gap-3">
+              <div className="relative flex flex-col items-end">
+                <LanguageSelector />
+
+              </div>
+              <Button
+                className="bg-white text-black hover:bg-gray-100 group rounded-full font-bold px-6 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+                onClick={handleCTA}
+              >
+                {t('nav.getStarted')}
+                <ArrowRight className="ml-2 h-4 w-4 text-black transform transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
             </div>
 
-            <Link to="/blog" onClick={() => setIsOpen(false)} className="text-gray-300 hover:text-white transition-colors relative group font-semibold uppercase tracking-widest text-sm">
-              {t('nav.blog')}
-              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full" />
-            </Link>
-
-            <Link to="/brokerage-calculator" onClick={() => setIsOpen(false)} className="text-gray-300 hover:text-white transition-colors relative group font-semibold uppercase tracking-widest text-sm">
-              {t('nav.calculator')}
-              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full" />
-            </Link>
-          </nav>
-
-          {/* Desktop Right */}
-          <div className="hidden md:flex items-center gap-3">
-            <ThemeToggle />
-            <LanguageSelector />
-            <Button
-              className="bg-white text-black hover:bg-gray-100 group rounded-full font-bold px-6 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]"
-              onClick={handleCTA}
-            >
-              {t('nav.getStarted')}
-              <ArrowRight className="ml-2 h-4 w-4 text-black transform transition-transform duration-300 group-hover:translate-x-1" />
-            </Button>
+            {/* Mobile Hamburger */}
+            <div className="md:hidden">
+              <button onClick={() => setIsOpen(!isOpen)} className="text-white p-1">
+                <Menu size={28} />
+              </button>
+            </div>
           </div>
-
-          {/* Mobile Hamburger */}
-          <div className="md:hidden">
-            <button onClick={() => setIsOpen(!isOpen)} className="text-white p-1">
-              <Menu size={28} />
-            </button>
-          </div>
-        </div>
         </motion.header>
       </div>
 
@@ -401,7 +407,7 @@ const Header = () => {
           <motion.div
             initial={{ opacity: 0, y: '-100%' }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{    opacity: 0, y: '-100%' }}
+            exit={{ opacity: 0, y: '-100%' }}
             transition={{ duration: 0.45, ease: 'easeInOut' }}
             className="fixed inset-0 bg-[#0B0B0B] z-50 md:hidden overflow-y-auto"
           >
@@ -426,7 +432,7 @@ const Header = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.05 }}
                 >
-                  {t('nav.home')}
+                  {'HOME'}
                 </motion.a>
 
                 {/* Mobile Services Accordion */}
@@ -449,7 +455,7 @@ const Header = () => {
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
-                        exit={{    height: 0, opacity: 0 }}
+                        exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden"
                       >
@@ -491,9 +497,9 @@ const Header = () => {
                   className="flex flex-col items-center gap-3 w-full max-w-xs"
                 >
                   <span className="text-xs font-bold text-gray-500 uppercase tracking-widest border-b border-white/10 pb-2 w-1/2 text-center">{t('nav.company')}</span>
-                  <Link to="/about-us"             onClick={() => setIsOpen(false)} className="text-2xl font-semibold text-gray-300 hover:text-white transition-colors uppercase tracking-widest">{t('nav.about')}</Link>
-                  <Link to="/contact"              onClick={() => setIsOpen(false)} className="text-2xl font-semibold text-gray-300 hover:text-white transition-colors uppercase tracking-widest">{t('nav.contact')}</Link>
-                  <a href="/#faq"                  onClick={handleSmoothScroll} className="text-xl font-semibold text-gray-400 hover:text-white transition-colors uppercase tracking-widest">{t('nav.faq')}</a>
+                  <Link to="/about-us" onClick={() => setIsOpen(false)} className="text-2xl font-semibold text-gray-300 hover:text-white transition-colors uppercase tracking-widest">{t('nav.about')}</Link>
+                  <Link to="/contact" onClick={() => setIsOpen(false)} className="text-2xl font-semibold text-gray-300 hover:text-white transition-colors uppercase tracking-widest">{t('nav.contact')}</Link>
+                  <a href="/#faq" onClick={handleSmoothScroll} className="text-xl font-semibold text-gray-400 hover:text-white transition-colors uppercase tracking-widest">{t('nav.faq')}</a>
                 </motion.div>
 
                 <motion.div
@@ -513,7 +519,6 @@ const Header = () => {
                   transition={{ duration: 0.4, delay: 0.52 }}
                   className="w-full max-w-xs mt-2 flex flex-col gap-4 items-center"
                 >
-                  <ThemeToggle />
                   <LanguageSelector mobile />
                 </motion.div>
               </nav>

@@ -49,7 +49,7 @@ const offers = [
 
 const Features = () => {
   return (
-    <section id="features" className="py-24 relative overflow-hidden bg-white dark:bg-[#050505] transition-colors duration-500">
+    <section id="features" className="py-24 relative overflow-hidden transition-colors duration-500">
       {/* Background Glows */}
       <div className="absolute top-[30%] left-[-20%] w-[1000px] h-[1000px] bg-accent-cyan/[0.03] rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-[10%] right-[-20%] w-[800px] h-[800px] bg-accent-purple/[0.04] rounded-full blur-[150px] pointer-events-none" />

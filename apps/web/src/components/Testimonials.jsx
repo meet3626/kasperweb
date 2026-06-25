@@ -77,7 +77,7 @@ const Testimonials = () => {
   };
 
   return (
-    <section id="testimonials" className="py-24 bg-gray-50 dark:bg-[#09090b] transition-colors duration-500 relative overflow-hidden">
+    <section id="testimonials" className="py-24 transition-colors duration-500 relative overflow-hidden">
       {/* Background Glows */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-accent-purple/5 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent-cyan/5 rounded-full blur-[150px] pointer-events-none" />

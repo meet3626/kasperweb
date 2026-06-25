@@ -31,4 +31,14 @@ const authorize = (permission) => {
   };
 };
 
-module.exports = { protect, authorize };
+const authorizeRoles = (...roles) => {
+  return (req, res, next) => {
+    if (req.admin && roles.includes(req.admin.role)) {
+      next();
+    } else {
+      res.status(403).json({ message: `Role (${req.admin ? req.admin.role : 'none'}) is not allowed to access this resource` });
+    }
+  };
+};
+
+module.exports = { protect, authorize, authorizeRoles };

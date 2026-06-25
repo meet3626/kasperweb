@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 const About = () => {
-  return <section id="about" className="py-24 bg-[#0B0B0B] overflow-hidden">
+  return <section id="about" className="py-24 overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div initial={{
@@ -18,7 +18,7 @@ const About = () => {
           ease: 'easeOut'
         }}>
             <div className="rounded-2xl overflow-hidden aspect-[4/3]">
-              <img class="w-full h-full object-cover" alt="Modern office with creative team working on computers" src="https://horizons-cdn.hostinger.com/e244d3b2-f8c1-4974-9afc-b7949c8a31be/charlesdeluvio-lks7vei-eag-unsplash-7Or6F.jpg" />
+              <img class="w-full h-full object-cover" alt="Modern office with creative team working on computers" src="/images/modern_office.png" />
             </div>
           </motion.div>
 
@@ -67,7 +67,7 @@ const About = () => {
           ease: 'easeOut'
         }} className="lg:order-last">
             <div className="rounded-2xl overflow-hidden aspect-[4/3]">
-              <img class="w-full h-full object-cover" alt="Diverse team collaborating around a table with laptops and notes" src="https://horizons-cdn.hostinger.com/e244d3b2-f8c1-4974-9afc-b7949c8a31be/michael-t-rxri-ho62y4-unsplash-2-tvxRc.jpg" />
+              <img class="w-full h-full object-cover" alt="Diverse team collaborating around a table with laptops and notes" src="/images/team_collaboration.png" />
             </div>
           </motion.div>
 

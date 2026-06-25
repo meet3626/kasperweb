@@ -85,7 +85,7 @@ const ServiceDetail = () => {
 
   if (!service) {
     return (
-      <div className="min-h-screen bg-[#080B10] flex items-center justify-center text-white">
+      <div className="min-h-screen flex items-center justify-center text-white">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Service Not Found</h1>
           <p className="text-gray-400 mb-8">The service module you're looking for doesn't exist.</p>
@@ -114,7 +114,7 @@ const ServiceDetail = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
-      className="min-h-screen bg-[#080B10] text-white overflow-x-hidden"
+      className="min-h-screen text-white overflow-x-hidden"
     >
       <Helmet>
         <title>{service.title} — KAPSERFX Institutional Solutions</title>
